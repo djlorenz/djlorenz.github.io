@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Climate Models and De-biasing</p>
+
+  <p class="medium">CMIP3 Climate Models</p>
+
+  <p class="normal"> 
+  The large-scale climate predictions are taken from the <a href="http://www-pcmdi.llnl.gov/ipcc/model_documentation/ipcc_model_documentation.php" target="_blank">CMIP3</a> climate models, a critical source of data to the <a href="http://www.ipcc.ch/publications_and_data/ar4/wg1/en/contents.html" target="_blank">Fourth Assessment Report</a> of the Intergovernmental Panel on Climate Change (IPCC AR4). There are 13 models with enough daily data for us to downscale:
+  </p>
+
+<table border="1">
+<tr>
+<th>Originating Group(s)</th>
+<th>Country</th>
+<th>CMIP3 I.D.</th>
+</tr>
+<tr>
+<td>Canadian Centre for Climate Modelling & Analysis</td>
+<td>Canada</td>
+<td>CGCM3.1(T47)</td>
+</tr>
+<tr>
+<td>Canadian Centre for Climate Modelling & Analysis</td>
+<td>Canada</td>
+<td>CGCM3.1(T63)</td>
+</tr>
+<tr>
+<td>Meteo-France / Centre National de Recherches Meteorologiques</td>
+<td>France</td>
+<td>CNRM-CM3</td>
+</tr>
+<tr>
+<td>CSIRO Atmospheric Research</td>
+<td>Australia</td>
+<td>CSIRO-Mk3.0</td>
+</tr>
+<tr>
+<td>CSIRO Atmospheric Research</td>
+<td>Australia</td>
+<td>CSIRO-Mk3.0</td>
+</tr>
+<tr>
+<td>US Dept. of Commerce / NOAA / Geophysical Fluid Dynamics Laboratory</td>
+<td>USA</td>
+<td>GFDL-CM2.0</td>
+</tr>
+<tr>
+<td>NASA / Goddard Institute for Space Studies</td>
+<td>USA</td>
+<td>GISS-AOM</td>
+</tr>
+<tr>
+<td>NASA / Goddard Institute for Space Studies</td>
+<td>USA</td>
+<td>GISS-ER</td>
+</tr>
+<tr>
+<td>LASG / Institute of Atmospheric Physics</td>
+<td>China</td>
+<td>FGOALS-g1.0</td>
+</tr>
+<tr>
+<td>Center for Climate System Research (The University of Tokyo), National Institute for Environmental Studies, and Frontier Research Center for Global Change (JAMSTEC)</td>
+<td>Japan</td>
+<td>MIROC3.2(hires)</td>
+</tr>
+<tr>
+<td>Meteorological Institute of the University of Bonn, Meteorological Research Institute of KMA, and Model and Data group</td>
+<td>Germany / Korea</td>
+<td>ECHO-G</td>
+</tr>
+<tr>
+<td>Max Planck Institute for Meteorology</td>
+<td>Germany</td>
+<td>ECHAM5/MPI-OM</td>
+</tr>
+<tr>
+<td>Meteorological Research Institute</td>
+<td>Japan</td>
+<td>MRI-CGCM2.3.2</td>
+</tr>
+</table>
+
+  <p class="normal"> 
+  Daily data from the CMIP3 models is only available for the following time periods: 1961-2000, 2046-2065 and 2081-2100. Therefore our downscaling is unfortunately also constrained to lie within these time periods. 
+  </p>
+
+
+  <p class="medium">De-biasing the Climate Models</p>
+
+  <p class="normal"> 
+  The CMIP3 climate models are de-biased using the "CDF remapping" of <a href="http://onlinelibrary.wiley.com/doi/10.1029/2001JD000659/abstract" target="_blank">Wood et al 2002</a> with a very minor modification to enhance the robustness at the tails of the distribution. They are "de-biased" to look like the <a href="http://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.html" target="_blank">NCEP Reanalysis</a>, because our statistical models were "trained" using the large-scale from the NCEP Reanalysis.
+
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>
