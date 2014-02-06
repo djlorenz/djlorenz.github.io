@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+
+  <p class="indent"><a class="small" href="inflation.html">Realistic extremes without "Inflation"</a></p>
+  <p class="indent"><a class="small" href="cov.html">Flexibility to Control Covariability in Time, Space and between Variables</a></p>
+  <p class="indent"><a class="small" href="interp.html">Preserves Extremes when Interpolating to a Grid</a></p>
+  <p class="indent"><a class="small" href="real.html">More Realistic</a></p>
+
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Advantages of a Probabilistic Approach</p>
+  <p class="medium">Flexibility to Control Covariability in Time, Space and between Variables</p>
+
+  
+  <p class="normal"> 
+  In a deterministic approach, the correlation between a downscaled variable at one "weather station" and second "weather station" is determined by the large-scale predictors. If, as is usually the case, the large-scale predictors are more highly correlated in space than the observed local variables, then the downscaled variables will be too highly correlated in space compared to observations.
+  </p>
+  
+  <p class="normal">
+
+  In a probabilistic approach, however, one has flexibility to control the correlation between two stations. For example, consider a small scale variable at two stations, $s_1(t)$ and $s_2(t)$, together with the corresponding large-scale predictors, $L_1(t)$ and $L_2(t)$, where all variables are a function of time, $t$. For simplicity, we assume that linear regression is a good approximation so that the downscaled $s_j(t)$ is related to $L_j(t)$ by
+
+  \begin{equation*}
+  \tilde{s}_j(t) = a_j L_j(t) + b_j + c_j n_j(t), 
+  \end{equation*}
+
+  where $a_j$ and $b_j$ are the ordinary least squares constants, $n_j(t)$ is noise with zero mean and unit variance, $c_j$ is the square root of the "unexplained" variance, $\tilde{s}(t)$ is the downscaled $s(t)$, and $j = 1$ or $2$. One can show that the correlation between the downscaled variables is:
+
+  \begin{equation} \label{corr}
+  \mathrm{corr} (s_1,s_2) = \frac{ a_1 a_2 \mathrm{cov} (L_1,L_2) + c_1 c_2 \mathrm{corr}(n_1,n_2) }{ \sqrt{(a_1^2 \sigma_1^2 + c_1^2)(a_2^2 \sigma_2^2 + c_2^2)} },
+  \end{equation}
+
+  where $\sigma_j$ is the standard deviation of $L_j(t)$. In a deterministic approach $n_j(t) = 0$ and the correlation between $s_1$ and $s_2$ \eqref{corr} simplifies to
+
+  \begin{equation*}
+  \mathrm{corr} (s_1,s_2) = \mathrm{corr} (L_1,L_2).
+  \end{equation*}
+
+  In a probabilistic approach, on the other hand, one has the freedom to choose the cross-correlation between $n_1(t)$ and $n_2(t)$ and this in turn determines the correlation between $s_1$ and $s_2$. In this simple example, one can solve \eqref{corr} for $\mathrm{corr}(n_1,n_2)$ and easily determine the noise cross-correlation required to correctly reproduce $\mathrm{corr}(s_1,s_2)$.
+
+  </p>
+  
+  <p class="normal">
+  The same strategy can be used to adjust the temporal auto-correlation and the correlation between two separate variables. For example, we find that the random noise for downscaled maximum temperature needs to be positively correlated with the random noise for minimum temperature in order to correctly reproduce the observed covariability between maximum and minimum temperature.
+
+  </p>
+
+  <hr>
+  
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>
+
+  

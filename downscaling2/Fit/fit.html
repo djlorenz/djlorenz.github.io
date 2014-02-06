@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Fitting Statistical Models - Cross Validation</p>
+
+  <p class="normal">
+  <ul>
+  <li>Use station observations and <a href="http://www.esrl.noaa.gov/psd/data/gridded/data.ncep.reanalysis.html" target="_blank">NCEP Reanalysis</a> for 1950-2009</li>
+  <li>Do separate fit for each calendar month</li>
+  <li>Parameters are estimated using <a href="https://en.wikipedia.org/wiki/Maximum_likelihood" target="_blank">Maximum Likelihood</a></li>
+  <li>All fits are Cross Validated:</li>
+  <ul>
+  <li>Set aside 3 years of the 60 years of data</li>
+  <li>Fit a model to remaining 57 years of data</li>
+  <li>Test model on the 3 years that were set aside</li>
+  <li>Repeat so that all 3 year chunks have a chance to be set aside</li>
+  <li>Number of skillful predictors while cross validating determines the number of predictors for final fit with all 60 years</li>
+  <li>The <a href="../LSPred/weight.html">empirical predictor weights</a> are also cross validated at the same time as the statistical models</li>
+  </ul>
+  </ul>
+
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>
