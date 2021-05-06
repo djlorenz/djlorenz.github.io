@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+
+  <p class="indent"><a class="small" href="inflation.html">Realistic extremes without "Inflation"</a></p>
+  <p class="indent"><a class="small" href="cov.html">Flexibility to Control Covariability in Time, Space and between Variables</a></p>
+  <p class="indent"><a class="small" href="interp.html">Preserves Extremes when Interpolating to a Grid</a></p>
+  <p class="indent"><a class="small" href="real.html">More Realistic</a></p>
+
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Advantages of a Probabilistic Approach</p>
+  <p class="medium">Realistic extremes without Inflation</p>
+  
+  <p class="normal"> 
+  In a deterministic approach, the variance of a downscaled variable is in general smaller than the observed variance of the same variable. This is the case simply because the large-scale does not "explain" all the variance of the small-scale. For example, consider classical linear regression with a single large-scale predictor, $L(t)$, and a small-scale predictand, $s(t)$, where both are a function of time, $t$. Using ordinary least squares, we can obtain the constants $a$ and $b$ that "best" predict $s$ from $L$:
+
+  \begin{equation*}
+  \tilde{s}(t) = a L(t) + b,
+  \end{equation*}
+  
+  where $\tilde{s}$ is the $s$ predicted from the large-scale. The variance of $\tilde{s}$, however, is too small:
+
+  \begin{equation*}
+  \mathrm{var}(\tilde{s}) = r^2 \mathrm{var}(s),
+  \end{equation*}
+
+  where $r$ is the correlation between $s$ and $L$.
+  
+  </p>
+  
+  <p class="normal">
+  One "solution" to the above "problem" is <a href="http://journals.ametsoc.org/doi/abs/10.1175/1520-0442(1999)012%3C3505%3AOTUOII%3E2.0.CO%3B2" target="_blank">inflation</a>: 
+  
+  \begin{equation*}
+  \tilde{s}(t) = \frac{a}{r} L(t) + b.
+  \end{equation*}
+
+  The problem with inflation is that you've artificially increased the sensitivity of the small-scale to the large-scale. This means that under climate change, for example, the downscaled temperature will increase too much compared to that suggested by the large-scale.
+
+  </p>
+
+  <p class="normal">
+  The most consistent solution is too explicitly consider the fact that some variance is unexplained:
+
+  \begin{equation} \label{noise}
+  \tilde{s}(t) = a L(t) + b + \sqrt{1-r^2} \sigma_s n(t),
+  \end{equation}
+
+  where $\sigma_s$ is the standard deviation of $s$ and $n(t)$ is random noise with zero mean and unit standard deviation. When classical linear regression applies, $n(t)$, is normally distributed.
+
+  </p>
+
+  <p class="normal">
+  The above equation \eqref{noise} can also be expressed as:
+
+  \begin{align*}
+  \Pr(\tilde{s} = s_0) &= \frac{1}{\sigma_s \sqrt{2 \pi}} \exp \left( -\frac{(s_0 - \mu)^2}{2 \sigma^2}  \right)\\
+  \mu &= a L(t) + b \\
+  \sigma &= \sigma_s \sqrt{1-r^2}
+  \end{align*}
+
+  Hence, we are predicting the Probability Density Function (PDF) of $s(t)$ as a function of the large-scale, $L(t)$. When we downscale precipitation, the form of the parametric PDF will be something other than the normal distribution used in the example above.
+
+
+  </p>
+
+<hr>
+
+<a href="../../">Home</a>
+
+</div>
+</div>
+
+<address></address>
+</body> </html>
+

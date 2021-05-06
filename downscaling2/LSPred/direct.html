@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+
+  <p class="indent"><a class="small" href="pitfalls.html">Potential Pitfalls</a></p>
+  <p class="indent"><a class="small" href="direct.html">Direct Predictors</a></p>
+  <p class="indent"><a class="small" href="other.html">Other Predictors</a></p>
+  <p class="indent"><a class="small" href="weight.html">Weighting Predictor Fields</a></p>
+
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Large-Scale Predictors</p>
+  <p class="medium">Direct Predictors</p>
+
+  <p class="normal"> 
+  In some studies, it is assumed that one should only use large-scale predictors that are well simulated by the models. This would mean that instead of using precipitation from the climate models (which is relatively poorly simulated) to predict local precipitation, one should use geopotential height or sea level pressure from the climate models to predict local precipitation. We take the view that by far the best predictors to use are the predictors directly related to the downscaled variables. So, for example, one should use modelled precipitation to predict local precipitation and modelled maximum daily temperature to predict local maximum daily temperature. As noted in other <a href="http://journals.ametsoc.org/doi/abs/10.1175/1520-0442(2003)016%3C0799:SPDOTN%3E2.0.CO%3B2" target="_blank">studies</a>, one advantage of using the "direct" predictors is that they are usually by far the most skillful predictors for downscaling the current climate. Perhaps an even bigger advantage, however, is that for predicting the future, the direct predictors are least likely to suffer the <a href="pitfalls.html">pitfalls</a> that can easily be encountered when using indirect predictors.
+  </p>
+
+  <p class="normal"> 
+  For our downscaling we use "direct" predictors for each of the three downscaled variables: precipitation, maximum daily temperature, and minimum daily temperature. Particularly for temperature, the direct predictors are nearly always the most important predictors. The direct predictors have the least skill for summer precipitation. We also use additional predictors besides the direct predictors to potentially improve skill in processes unresolved by the large-scale climate models. These other predictors are discussed in the next <a href="other.html">section</a>.
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>
+

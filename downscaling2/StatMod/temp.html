@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  
+  <p class="indent"><a class="small" href="temp.html">Temperature</a></p>
+  <p class="indent"><a class="small" href="prcp.html">Precipitation - Basics</a></p>
+  <p class="indent"><a class="small" href="pocc.html">Precipitation Occurrence</a></p>
+  <p class="indent"><a class="small" href="pam.html">Precipitation Amount</a></p>
+  
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Statistical Models - Temperature</p>
+
+  <p class="medium">Summary</p>
+
+  <p class="normal"> 
+  We use <a href="http://en.wikipedia.org/wiki/Linear_regression" target="_blank">linear regression</a> to predict the temperature given large-scale atmsopheric state. We add <a href="http://journals.ametsoc.org/doi/abs/10.1175/1520-0442(1999)012%3C3505%3AOTUOII%3E2.0.CO%3B2" target="_blank">gaussian noise</a> to the linear fit to simulate the portion of the variance that is <a href="http://en.wikipedia.org/wiki/Fraction_of_variance_unexplained" target="_blank">unexplained</a>. In some cases, we allow the variance of the noise to vary with the predictors even though the assumptions of linear regression do not strictly hold in this case.
+  </p>
+  
+  <p class="medium">Linear Regression</p>
+
+  <p class="normal"> 
+  The most basic model for relating a dependent variable to independent variables is linear regression. The linear regression model takes the form
+\begin{equation}\label{eqn:lin_regr}  
+  y(t) = a_0 + a_1x_1(t) + a_2x_2(t) + \ldots  
+\end{equation}  
+where $a_i$ are constants that are usually obtained by minimizing the sum of the squared 'errors' between $y(t)$ and the value of $y(t)$ predicted from $x_i(t)$. Written in mathematical form, we find the $a_i$ that minimize 
+\begin{equation}\label{eqn:sq_err}  
+  \epsilon =  \frac{1}{T-1} \sum_{t=1}^T{\left( y(t) - a_0 - a_1x_1(t) - a_2x_2(t) - \ldots \right) }^2  
+\end{equation}  
+where $\epsilon$ denotes the error and $T$ is the total number of times in the statistical sample. In linear regression, we predict the mean of $y(t)$ given the $x_i(t)$, but as mentioned <a href="../ProbApp/prob.html">previously</a>, we must know how $y(t)$ deviates from this mean in order to capture the variability and extremes in $y(t)$. According to classical linear regression theory, the errors from the mean are distributed in a normal distribution with a variance of $\epsilon$. Thus, the full Probability Density Function (PDF) of $y(t)$ contingent on $x_i(t)$ is: 
+\begin{equation}\label{eqn:lin_regr_norm}  
+  \Pr {  \left\{ y(t) = z  \right\} } = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(z-\mu(t))^2}{2\sigma^2}\right)
+\end{equation}  
+where $\mu(t) =  a_0 + a_1x_1(t) + a_2x_2(t) + \ldots $ and $\sigma^2 = \epsilon$. 
+Note that the standard deviation,  $\sigma$, of the normal distribution in equation (\ref{eqn:lin_regr_norm}) is a constant and therefore completely independent of the variables $x_i(t)$. Also note that the minimization of the error in equation (\ref{eqn:sq_err}) can be applied to any data, but only for normally distributed errors are these 'least squares' estimates of $a_i$ the most likely estimates given the data.
+  </p>
+
+
+<div id="figure">
+  <img src="T_obs_pdf.png" style="max-width:100%;">
+  <p class="caption">Figure 1: Histogram of daily maximum or minimum temperature at Madison, WI. a) maximum temperature in July. b) minimum temperature in July. c) maximum temperature in January. d) minimum temperature in January. The y-axis is the number of days in each bin divided by the total number of days (%) and the x-axis is the temperature at the bin center in Celsius. The bin width is 5/9 degrees.</p>
+</div>
+
+  <p class="normal"> 
+  Because the distributions maximum and minimum temperature are continuous with no obvious sharp bounds on the range of possible values, linear regression and the assumption of normally distributed errors might be a reasonable model for these two variables. Looking at the histogram of daily maximum and minimum temperature for Madison, WI in July, we see that the distribution generally follows our notion of the symmetric, 'bell curve' shape of the normal distribution (Figure 1). In January, however, the distribution of maximum temperature is noticeably skewed toward cold days and the distribution of minimum temperature seems excessively broad and flat in relation to the normal distribution. Before giving up on classical linear regression, however, we must note that the <em>errors</em> must be normally distributed not the actual values of the dependent variable. If the large-scale independent variables also exhibit the departures from normality seen in Figure 1, then there is hope that the errors might actually be close to normally distributed. Looking at the histogram of the large-scale maximum daily temperature, we indeed see that the large-scale temperature shows similar departures from normality as the record at Madison, WI (Figure 2a).
+  </p>
+
+<div id="figure">
+  <img src="T_ncep_pdf.png" style="max-width:100%;">
+  <p class="caption">Figure 2: Histogram of daily maximum or minimum temperature at the grid point in the NCEP Reanalysis closest to Madison, WI. a) maximum temperature in January. b) minimum temperature in January. The y-axis is the number of days in each bin divided by the total number of days (%) and the x-axis is the temperature at the bin center in Celsius. The bin width is 5/9 degrees.</p>
+</div>
+
+  <p class="normal"> 
+  It turns out that linear regression gives an excellent fit to the observed PDF of maximum temperature in January. For minimum temperature in January (Figure 2b), however, the distribution of the large-scale from the NCEP Reanalysis is not as flat in the middle as the observed histogram and the upper tail of the distribution is too pronounced for the large-scale. Another problem with linear regression for minimum temperature in winter, which is not evident here, is the assumption of constant variance. We find that the standard deviation, $\sigma$, in equation (\ref{eqn:lin_regr_norm}) is not constant, but depends on $x_i(t)$.  While, we still use linear regression to predict the mean, $\mu$, minimum temperature in winter, we implement additional corrections described in detail below so that the downscaling of the extremes in minimum temperature are much better represented.
+  </p>
+
+  <p class="medium">Non-constant Variance</p>
+
+  <p class="normal"> 
+  Under Construction
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>
+
+  

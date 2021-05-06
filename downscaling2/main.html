@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="main.html">Introduction</a></p>
+  <p class="normal"><a href="ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="Proj/proj.html">Future Projections</a></p>
+  
+</div>
+
+<div id="content">
+  
+  <a href="../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Introduction</p>
+
+  <img src="example.png" style="max-width:100%;"></p>
+
+  <p class="medium">Data Summary</p>
+
+  <ul>
+    <li>Spatial Resolution: 0.1 x 0.1 degrees</li>
+    <li>Temporal Resolution: Daily</li>
+    <li>Spatial Domain: US and southern Canada east of the Rocky Mountains</li>
+    <li>Temporal Domain: 1961-2000, 2046-2065, 2081-2100</li>
+    <li>Variables: Precipitation, Maximum Temperature, Minimum Temperature</li>
+    <li>13 <a href="http://www-pcmdi.llnl.gov/ipcc/about_ipcc.php" target="_blank">CMIP3</a> climate models</li>
+    <li>Future Emission Scenarios: B1, A1B, A2</li>
+    <li>Methodology:</li>
+    <ul>
+      <li>Condition a spatially and temporally varying Probability Density Function (PDF) on the large-scale from observations (NCEP Reanalysis).</li>
+      <li>Create spatially and temporally varying PDFs from the de-biased climate models.</li>
+      <li>Draw random numbers from the PDFs to generate a spatially and temporally varying "realization" of the small-scale variables that is consistent with the large-scale in the climate models. Currently 3 independent realizations have been generated.</li>
+      </ul>
+  </ul>
+
+
+  <p class="medium">Obtaining the Data</p>
+  
+  <p class="normal"> 
+  Subsets of the data for a small region can be obtained from the <a href="http://cida.usgs.gov/climate/gdp/" target="_blank">USGS Downscaled Climate Geo Data Portal</a>.
+  </p>
+
+  <p class="normal"> 
+  For the entire dataset, contact Kevin Braun (kdbraun@wisc.edu) and send a 1Tb external hard drive to: <br><br>
+  
+  Kevin Braun <br>
+  Center for Climatic Research <br>
+  1225 W. Dayton St. <br>
+  Madison, Wisconsin 53706-1695, USA <br><br>
+
+  Here's a <a href="README.txt" target="_blank">README</a> file that comes with the full dataset.
+  </p>
+
+  <p class="medium">More Information</p>
+  <p class="normal"> 
+  For more information about the data, please contact: <br><br>
+
+  David Lorenz<br>
+  dlorenz@wisc.edu<br>
+
+  </p>
+
+  
+  <hr>
+  
+  <a href="../">Home</a>
+  
+</div>
+</div>
+
+
+<address></address>
+</body> </html>

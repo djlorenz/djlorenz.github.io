@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  
+  <p class="indent"><a class="small" href="temp.html">Temperature</a></p>
+  <p class="indent"><a class="small" href="prcp.html">Precipitation - Basics</a></p>
+  <p class="indent"><a class="small" href="pocc.html">Precipitation Occurrence</a></p>
+  <p class="indent"><a class="small" href="pam.html">Precipitation Amount</a></p>
+  
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Statistical Models - Precipitation Occurrence</p>
+  <p class="medium">Summary</p>
+
+  <p class="normal"> 
+  We use <a href="http://en.wikipedia.org/wiki/Logistic_regression" target="_blank">logistic regression</a> to predict the probability that there is non-zero precipitation given the large-scale atmsopheric state.
+  </p>
+  
+  <p class="medium">Logistic Regression</p>
+
+  <p class="normal"> 
+To model the relationship between large-scale variables and the occurrence of precipitation at a point, we use a broader class of statistical models than linear regression known as <a href="http://en.wikipedia.org/wiki/Generalized_linear_model" target="_blank">generalized linear models</a>. A generalized linear model consists of three components:
+  </p>
+
+  <ul class="normal">
+    <li> A distribution function from the exponential family (includes the normal, binomial, Poisson, gamma, and Weibull distributions)</li>
+    <li> A linear predictor $\eta(t) = a_0 + a_1x_1(t) + a_2x_2(t) + \ldots$</li>
+    <li> A link function $g$ such that ${\rm E}(y) = \mu = g^{-1}(\eta)$, where ${\rm E}(y)$ denotes the expected value, or mean, of $y$.</li>
+  </ul>
+  
+  <p class="normal"> 
+For classical linear regression the distribution function is the normal distribution and the link function is the identity function so that ${\rm E}(y) = \mu = \eta = a_0 + a_1x_1(t) + \ldots$ .
+  </p>
+  
+  <p class="normal"> 
+  In our precipitation occurrence model the value of "precipitation occurrence", $P_{occ}$, takes one of two values
+\begin{equation}\label{eqn:p_occ}  
+  P_{occ}=
+\begin{cases} 1, & \textrm{if the day is wet,} \\
+0, & \textrm{if the day is dry.} 
+\end{cases}
+\end{equation}  
+We predict the probability, $\mu$, that the day is wet. Obviously $\mu$ should be between 0 and 1 inclusive. The generalized linear model that corresponds to binary data such as $P_{occ}$ has a special name: logistic regression. The 'canonical' inverse link function for logistic regression is the logistic function
+\begin{equation}\label{eqn:logistic}  
+  \mu = g^{-1}(\eta) = \frac{1}{1+\exp(-\eta)}
+\end{equation}  
+where $\eta = a_0 + a_1x_1(t) + a_2x_2(t) + \ldots$ as before. The logistic function approaches 0 as $\eta \rightarrow -\infty$ and the function approaches 1 as $\eta \rightarrow \infty$ (Figure 1). (Note, we find it much easier to think in terms of the inverse of the link function, $g^{-1}$, rather than the link function itself.)
+  </p>
+
+  <div id="figure">
+  <img src="logistic.png" style="max-width:100%;">
+  <p class="caption">Figure 1: Graph of the logistic function (Equation \ref{eqn:logistic}).</p>
+  </div>
+
+  <p class="normal"> 
+  Regardless of the values of the dependent variables, $\mu$ always lies on the interval from 0 to 1 just like a probability should. The logistic regression model is fit by the method of maximum likelihood, which finds the constants $a_i$ that make up the expression for $\eta$. After we fit the model, we can calculate $\eta$ from the large-scale predictors, $x_i(t)$. We then transform $\eta$ to get the probability of precipitation, $\mu$, using equation (\ref{eqn:logistic}). To generate a time series of $P_{occ}$ we generate a time series of uniformly distributed random numbers between 0 and 1, $r(t)$. If $r(t) < \mu(t)$, then the day is wet, otherwise the day is dry.
+  </p>
+
+  <p class="normal"> 
+  One is also free to choose other links relating $\mu$ to $\eta$ besides equation (\ref{eqn:logistic}), but we have found that the logistic link works just as well or better than the other links we have tried.
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>

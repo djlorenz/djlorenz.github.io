@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  
+  <p class="indent"><a class="small" href="temp.html">Temperature</a></p>
+  <p class="indent"><a class="small" href="prcp.html">Precipitation - Basics</a></p>
+  <p class="indent"><a class="small" href="pocc.html">Precipitation Occurrence</a></p>
+  <p class="indent"><a class="small" href="pam.html">Precipitation Amount</a></p>
+  
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Statistical Models</p>
+
+  <p class="normal"> 
+  Here we overview the statistical models that relate either temperature or precipitation at a weather station to variables averaged over a larger scale more representative of the scales resolved by climate models. The large-scale variables are the independent data and are denoted here by $x_i(t)$, where $i$ is an index which denotes the different large-scale variables used as predictors and $t$ is an index over time. The station data is the dependent variable and is denoted here by $y(t)$. The fitting of the statistical model is performed on the actual observed relationships between station data and large-scale variables and is therefore independent of the climate models. Because of the strong annual cycle in our downscaling domain, twelve separate statistical models are fit to each variable -- one for each calendar month.
+
+    <ul>
+    <li><a href="temp.html">Temperature</a></li>
+    <li><a href="prcp.html">Precipitation - Basics</a></li>
+    <li><a href="pocc.html">Precipitation Occurrence</a></li>
+    <li><a href="pam.html">Precipitation Amount</a></li>
+    </ul>
+
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>
+
+  
