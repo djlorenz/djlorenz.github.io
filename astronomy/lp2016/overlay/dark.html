@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Light Pollution Atlas 2006 and 2016</title>
+    <title>Light Pollution Atlas 2006, 2016 and 2020</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="L.Control.Range.css" />
@@ -72,7 +72,26 @@
            tileSize: 1024,
            zoomOffset: -2,
            opacity: 0.5
+          })
 
+      var lightpollution2020 = L.tileLayer(
+          'https://djlorenz.github.io/astronomy/lp2020/overlay/tiles/tile_{z}_{x}_{y}.png', {
+           minZoom: 2,
+           maxNativeZoom: 8,
+           maxZoom: 17,
+           tileSize: 1024,
+           zoomOffset: -2,
+           opacity: 0.5
+          })
+
+      var trend_2014_2020 = L.tileLayer(
+          'https://djlorenz.github.io/astronomy/lp2020/overlay/trend_2014_2020/tile_{z}_{x}_{y}.png', {
+           minZoom: 2,
+           maxNativeZoom: 8,
+           maxZoom: 17,
+           tileSize: 1024,
+           zoomOffset: -2,
+           opacity: 0.5
           })
 
       var map = L.map('map', {
@@ -89,8 +108,10 @@
 	};
 
        var overlays = {
-	       "2006 light pollution": lightpollution2006,
-	       "2016 light pollution": lightpollution2016
+	       '<a href="http://djlorenz.github.io/astronomy/lp2006/" target="_blank">2006 light pollution</a>': lightpollution2006,
+	       '<a href="http://djlorenz.github.io/astronomy/lp2016/" target="_blank">2016 light pollution</a>': lightpollution2016,
+	       '<a href="http://djlorenz.github.io/astronomy/lp2020/" target="_blank">2020 light pollution</a>': lightpollution2020,
+	       '<a href="http://djlorenz.github.io/astronomy/lp2020/trend.html" target="_blank">2014-2020 trend</a>': trend_2014_2020
 	};
 
        var options = {
@@ -100,11 +121,18 @@
        L.control.layers(baseLayers, overlays, options).addTo(map);
 
        map.on('overlayadd', function(eo) {
-  		if (eo.name === '2006 light pollution') {
-    		setTimeout(function(){map.removeLayer(lightpollution2016)}, 10);
-  		} else if (eo.name === '2016 light pollution') {
-                setTimeout(function(){map.removeLayer(lightpollution2006)}, 10);
-  		}
+                if (eo.layer !== lightpollution2006) {
+                   if ( map.hasLayer(lightpollution2006) ) {
+                      setTimeout(function(){map.removeLayer(lightpollution2006)}, 10); } }
+                if (eo.layer !== lightpollution2016) {
+                   if ( map.hasLayer(lightpollution2016) ) {
+                      setTimeout(function(){map.removeLayer(lightpollution2016)}, 10); } }
+                if (eo.layer !== lightpollution2020) {
+                   if ( map.hasLayer(lightpollution2020) ) {
+                      setTimeout(function(){map.removeLayer(lightpollution2020)}, 10); } }
+                if (eo.layer !== trend_2014_2020) {
+                   if ( map.hasLayer(trend_2014_2020) ) {
+                      setTimeout(function(){map.removeLayer(trend_2014_2020)}, 10); } }
 		});
 
     </script>
@@ -123,6 +151,8 @@
             console.log(e.value);
             lightpollution2006.setOpacity(e.value / 100);
             lightpollution2016.setOpacity(e.value / 100);
+            lightpollution2020.setOpacity(e.value / 100);
+            trend_2014_2020.setOpacity(e.value / 100);
         })
 
         map.addControl(control);
