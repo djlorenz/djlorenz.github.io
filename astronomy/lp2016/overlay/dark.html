@@ -120,6 +120,8 @@
 
        L.control.layers(baseLayers, overlays, options).addTo(map);
 
+       L.control.scale({maxWidth: 200}).addTo(map);
+
        map.on('overlayadd', function(eo) {
                 if (eo.layer !== lightpollution2006) {
                    if ( map.hasLayer(lightpollution2006) ) {
