@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="L.Control.Range.css" />
+    <link href="../../src/AnimatedSearchBox.css" rel="stylesheet">
 
     <style>
         body {
@@ -26,6 +27,7 @@
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="L.Control.Range.js"></script>
+    <script src="../../src/AnimatedSearchBox.js"></script>
     
     <script>
 
@@ -136,6 +138,56 @@
                    if ( map.hasLayer(trend_2014_2020) ) {
                       setTimeout(function(){map.removeLayer(trend_2014_2020)}, 10); } }
 		});
+
+       var searchbox = L.control.searchbox({
+           position: 'topright',
+           expand: 'left',
+           width: '125px'
+       }).addTo(map);
+
+       var message = "Lat, Lon, then Enter"
+
+       searchbox.setValue(message)
+
+       searchbox.onInput("keyup", function (e) {
+           var start = searchbox.getValue().replace(message,'');
+           searchbox.clear();
+           searchbox.setValue(start);
+           if (e.keyCode == 13) {
+               if( searchbox.getValue() !== "") {
+               var values = searchbox.getValue().split(',');
+               var lat = values[0];
+               var lng = values[1];
+               if( !isNaN(lat) && !isNaN(lng) ) {
+
+                   if( lat >= -80 && lat <= 80 && lng >= -360 && lng <= 360 ) {
+
+                       var marker = L.marker([lat,lng], {
+                           title: "Lat, Lon = "+lat+", "+lng,
+                           opacity: 0.7
+
+                       }).addTo(map);
+                       var zoom = Math.max( map.getZoom(), 8 );
+                       map.flyTo([lat, lng],zoom);
+                       searchbox.clear();
+                       searchbox.hide();
+                   } else {
+                       alert("\"" + searchbox.getValue() + "\" is out of bounds:\r\n -80 <= lat <= 80 and\r\n -360 <= lon <= 360");
+                      searchbox.clear();
+                      searchbox.hide();
+                   }
+               } else {
+                  alert("\"" + searchbox.getValue() + "\" is not a valid input\r\nType Lat, Lon, then Enter");
+                  searchbox.clear();
+                  searchbox.hide();
+
+               }
+               } else {
+                  searchbox.clear();
+                  searchbox.hide();
+               }
+           }
+       });
 
     </script>
     <script>
