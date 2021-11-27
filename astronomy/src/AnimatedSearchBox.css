@@ -66,8 +66,8 @@
 }
 
 .leaflet-searchbox-container .leaflet-searchbox-icon {
-    width: 80%;
-    height: 80%;
+    width: 1.4em;
+    height: 1.4em;
 }
 
 .leaflet-searchbox-container .leaflet-searchbox-autocomplete {
