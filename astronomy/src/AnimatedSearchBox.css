@@ -29,14 +29,14 @@
     border-top-left-radius: 20px 50%;
     border-bottom-left-radius: 20px 50%;
     border-right: none;
-    padding: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 15px;
 }
 
 .leaflet-searchbox-wrapper .leaflet-searchbox-right {
     border-top-right-radius: 20px 50%;
     border-bottom-right-radius: 20px 50%;
     border-left: none;
-    padding: 0px 0px 0px 0px;
+    padding: 0px 15px 0px 0px;
 }
 
 .leaflet-searchbox-wrapper .leaflet-searchbox-button {
