@@ -24,7 +24,7 @@ prcp_mean_1981_2010.nc
 temp_mean_1981_2010.nc
 prcp_mean_2046_2065.nc
 temp_mean_2046_2065.nc
-These files have time averages over the range of years indicated in the file name. There is a separate time average for each of the 12 calendar months. Some averaging time periods overlap the transtion from "historical" to "rcp" scenarios (2005-2006, whicn occurs at the end of 2005. In these cases, the "historical" and "rcp85" are always used for the portion of the time period not in the scenario where the file resides. We choose rcp85 because all models submitted to this scenario. We only do this special averaging for times near the start of the future scenarios, which is when the differences in climate between scenarios are very small.
+These files have time averages over the range of years indicated in the file name. There is a separate time average for each of the 12 calendar months. Some averaging time periods overlap the transition from "historical" to "rcp" scenarios (2005-2006, which occurs at the end of 2005. In these cases, the "historical" and "rcp85" are always used for the portion of the time period not in the scenario where the file resides. We choose rcp85 because all models submitted to this scenario. We only do this special averaging for times near the start of the future scenarios, which is when the differences in climate between scenarios are very small.
 
 Similarly, there are files like:
 prcp_cdf_1981_2010.nc
@@ -33,7 +33,7 @@ These files have the time average cumulative distribution function (CDF). There 
 
 Similarly, there are files like:
 prcp_annual_max_cdf_2006_2100.nc
-These give the CDF of the annual maximum precipitation for each year in the scenario. The annual maximum varies with year, so at least 20-30 year averages of these fields are needed for robust statisitcs for extreme events.
+These give the CDF of the annual maximum precipitation for each year in the scenario. The annual maximum varies with year, so at least 20-30 year averages of these fields are needed for robust statistics for extreme events. A geometric rather than arithmetic mean is best for averaging the CDFs.
 
 There are some files like:
 prcp_02_2054.nc
