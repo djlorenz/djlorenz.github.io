@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Light Pollution Atlas 2006, 2016 and 2020</title>
+    <title>Light Pollution Atlas 2006, 2016, 2020 and 2022</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="L.Control.Range.css" />
@@ -86,8 +86,18 @@
            opacity: 0.5
           })
 
-      var trend_2014_2020 = L.tileLayer(
-          'trend_2014_2020/tile_{z}_{x}_{y}.png', {
+      var lightpollution2022 = L.tileLayer(
+          'https://djlorenz.github.io/astronomy/lp2022/overlay/tiles/tile_{z}_{x}_{y}.png', {
+           minZoom: 2,
+           maxNativeZoom: 8,
+           maxZoom: 19,
+           tileSize: 1024,
+           zoomOffset: -2,
+           opacity: 0.5
+          })
+
+      var trend_2013_2022 = L.tileLayer(
+          'https://djlorenz.github.io/astronomy/lp2022/overlay/trend_2013_2022/tile_{z}_{x}_{y}.png', {
            minZoom: 2,
            maxNativeZoom: 8,
            maxZoom: 19,
@@ -112,8 +122,9 @@
        var overlays = {
 	       '<a href="https://djlorenz.github.io/astronomy/lp2006/" target="_blank">2006 light pollution</a>': lightpollution2006,
 	       '<a href="https://djlorenz.github.io/astronomy/lp2016/" target="_blank">2016 light pollution</a>': lightpollution2016,
-	       '<a href="https://djlorenz.github.io/astronomy/lp2020/" target="_blank">2020 light pollution</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://djlorenz.github.io/astronomy/lp2020/colors.html" target="_blank">Color Key</a>': lightpollution2020,
-	       '<a href="https://djlorenz.github.io/astronomy/lp2020/trend.html" target="_blank">2014-2020 trend</a>': trend_2014_2020
+	       '<a href="https://djlorenz.github.io/astronomy/lp2020/" target="_blank">2020 light pollution</a>': lightpollution2020,
+	       '<a href="https://djlorenz.github.io/astronomy/lp2022/" target="_blank">2022 light pollution</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://djlorenz.github.io/astronomy/lp2022/colors.html" target="_blank">Color Key</a>': lightpollution2022,
+	       '<a href="https://djlorenz.github.io/astronomy/lp2022/trend.html" target="_blank">2013-2022 trend</a>': trend_2013_2022
 	};
 
        var options = {
@@ -134,9 +145,12 @@
                 if (eo.layer !== lightpollution2020) {
                    if ( map.hasLayer(lightpollution2020) ) {
                       setTimeout(function(){map.removeLayer(lightpollution2020)}, 10); } }
-                if (eo.layer !== trend_2014_2020) {
-                   if ( map.hasLayer(trend_2014_2020) ) {
-                      setTimeout(function(){map.removeLayer(trend_2014_2020)}, 10); } }
+                if (eo.layer !== lightpollution2022) {
+                   if ( map.hasLayer(lightpollution2022) ) {
+                      setTimeout(function(){map.removeLayer(lightpollution2022)}, 10); } }
+                if (eo.layer !== trend_2013_2022) {
+                   if ( map.hasLayer(trend_2013_2022) ) {
+                      setTimeout(function(){map.removeLayer(trend_2013_2022)}, 10); } }
 		});
 
        var searchbox = L.control.searchbox({
@@ -156,8 +170,8 @@
            if (e.keyCode == 13) {
                if( searchbox.getValue() !== "") {
                var values = searchbox.getValue().split(',');
-               var lat = values[0];
-               var lng = values[1];
+               var lat = values[0].replace(/[()]/g, '');
+               var lng = values[1].replace(/[()]/g, '');
                if( !isNaN(lat) && !isNaN(lng) ) {
 
                    if( lat >= -80 && lat <= 80 && lng >= -360 && lng <= 360 ) {
@@ -206,7 +220,7 @@
             lightpollution2006.setOpacity(e.value / 100);
             lightpollution2016.setOpacity(e.value / 100);
             lightpollution2020.setOpacity(e.value / 100);
-            trend_2014_2020.setOpacity(e.value / 100);
+            trend_2013_2022.setOpacity(e.value / 100);
         })
 
         map.addControl(control);
