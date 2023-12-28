@@ -115,7 +115,8 @@
       var map = L.map('map', {
   		center: [0, 0],
 		zoom: 2,
-                layers: [standard, lightpollution2022]
+                layers: [standard, lightpollution2022],
+                tap: false
   	});
     
        var baseLayers = {
@@ -210,6 +211,11 @@
        });
 
    map.on('click', function(e) {
+
+      <!--if(map.hasLayer(lightpollution2020)){
+          console.log("2020 yes"); }
+      if(map.hasLayer(lightpollution2022)){
+          console.log("2022 yes"); }-->
 
      getInfoFromLonLat(e.latlng);
 
