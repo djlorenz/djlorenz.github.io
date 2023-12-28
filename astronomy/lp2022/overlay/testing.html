@@ -4,8 +4,8 @@
     <title>Light Pollution Atlas 2006, 2016, 2020 and 2022</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="L.Control.Range.css" />
-    <link href="../../src/AnimatedSearchBox.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://djlorenz.github.io/astronomy/lp2022/overlay/L.Control.Range.css" />
+    <link href="https://djlorenz.github.io/astronomy/src/AnimatedSearchBox.css" rel="stylesheet">
 
     <style>
         body {
@@ -26,8 +26,9 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="L.Control.Range.js"></script>
-    <script src="../../src/AnimatedSearchBox.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/lp2022/overlay/L.Control.Range.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/src/AnimatedSearchBox.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/src/pako_inflate.min.js"></script>
     
     <script>
 
@@ -87,7 +88,7 @@
           })
 
       var lightpollution2022 = L.tileLayer(
-          'tiles/tile_{z}_{x}_{y}.png', {
+          'https://djlorenz.github.io/astronomy/lp2022/overlay/tiles/tile_{z}_{x}_{y}.png', {
            minZoom: 2,
            maxNativeZoom: 8,
            maxZoom: 19,
@@ -97,7 +98,7 @@
           })
 
       var trend_2013_2022 = L.tileLayer(
-          'trend_2013_2022/tile_{z}_{x}_{y}.png', {
+          'https://djlorenz.github.io/astronomy/lp2022/overlay/trend_2013_2022/tile_{z}_{x}_{y}.png', {
            minZoom: 2,
            maxNativeZoom: 8,
            maxZoom: 19,
@@ -205,12 +206,17 @@
 
 map.on('click', function(e) {
 
-getFileFromServer("https://djlorenz.github.io/astronomy/lp2020/overlay/tiles/tile_6_9_36.png",e.latlng);
+getInfoFromLonLat(e.latlng);
 
 });
 
-function getFileFromServer(url,elatlng) {
+function getInfoFromLonLat(elatlng) {
     var xhr;
+
+    var tilex = Math.floor(mod(elatlng.lng + 180.0,360.0)/5.0) + 1
+    var tiley = Math.floor((elatlng.lat + 65.0)/5.0) + 1
+
+    var url = "https://djlorenz.github.io/astronomy/binary_tiles/2022/binary_tile_" + tilex + "_" + tiley + ".dat.gz"
 
     xhr = new XMLHttpRequest();
     xhr.onload = returnstuff;
@@ -219,18 +225,19 @@ function getFileFromServer(url,elatlng) {
 
     function returnstuff() {
         var popLocation= elatlng;
+        var data_array = pako.ungzip(xhr.response);
         var popup = L.popup()
             .setLatLng(popLocation)
-            .setContent('<p>Lat, Lon :  ' + elatlng.lat.toFixed(4) + ', ' + elatlng.lng.toFixed(4) + '</p><p>'+xhr.response +'</p>')
+            .setContent('<p>Lat, Lon :  ' + elatlng.lat.toFixed(4) + ', ' + elatlng.lng.toFixed(4) + '</p><p>'+ tilex + ' ' + tiley + '</p><p>'+ url +'</p>')
+            <!--.setContent('<p>Lat, Lon :  ' + elatlng.lat.toFixed(4) + ', ' + elatlng.lng.toFixed(4) + '</p><p>'+xhr.response +'</p>')-->
              .openOn(map);
 
         }
     }
 
-
-
-    </script>
-    <script>
+   function mod(n, m) {
+     return ((n % m) + m) % m;
+   }
 
         var control = L.control.range({
             position: 'topright',
