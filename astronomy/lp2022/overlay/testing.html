@@ -16,6 +16,11 @@
             height: 100%;
             width: 100%;
         }
+        sup {
+            vertical-align: baseline;
+            position: relative;
+            top: -0.4em;
+        }
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -204,39 +209,81 @@
            }
        });
 
-map.on('click', function(e) {
+   map.on('click', function(e) {
 
-getInfoFromLonLat(e.latlng);
+     getInfoFromLonLat(e.latlng);
 
-});
+   });
 
-function getInfoFromLonLat(elatlng) {
-    var xhr;
+   function getInfoFromLonLat(elatlng) {
+     var xhr;
 
-    var tilex = Math.floor(mod(elatlng.lng + 180.0,360.0)/5.0) + 1
-    var tiley = Math.floor((elatlng.lat + 65.0)/5.0) + 1
+     <!--figure out which tile has binary data. Each tile is 600 x 600 points (1/120 degree resolution)-->
+     var lonFromDateLine = mod(elatlng.lng + 180.0,360.0);
+     var latFromStart = elatlng.lat + 65.0;
+     var tilex = Math.floor(lonFromDateLine/5.0) + 1;
+     var tiley = Math.floor(latFromStart/5.0) + 1;
+     var url = "https://djlorenz.github.io/astronomy/binary_tiles/2022/binary_tile_" + tilex + "_" + tiley + ".dat.gz";
 
-    var url = "https://djlorenz.github.io/astronomy/binary_tiles/2022/binary_tile_" + tilex + "_" + tiley + ".dat.gz"
+     <!--figure out location of nearset grid point in tile-->
+     var ix = Math.round( 120.*(lonFromDateLine - 5.0*(tilex - 1) + 1./240.) );
+     var iy = Math.round( 120.*(latFromStart    - 5.0*(tiley - 1) + 1./240.) );
 
-    xhr = new XMLHttpRequest();
-    xhr.onload = returnstuff;
-    xhr.open("GET", url, true);
-    xhr.send();
 
-    function returnstuff() {
-        var popLocation= elatlng;
-        var data_array = pako.ungzip(xhr.response);
-        var popup = L.popup()
-            .setLatLng(popLocation)
-            .setContent('<p>Lat, Lon :  ' + elatlng.lat.toFixed(4) + ', ' + elatlng.lng.toFixed(4) + '</p><p>'+ tilex + ' ' + tiley + '</p><p>'+ url +'</p>')
-            <!--.setContent('<p>Lat, Lon :  ' + elatlng.lat.toFixed(4) + ', ' + elatlng.lng.toFixed(4) + '</p><p>'+xhr.response +'</p>')-->
-             .openOn(map);
+     xhr = new XMLHttpRequest();
+     xhr.responseType = 'arraybuffer';
+     xhr.onload = returnstuff;
+     xhr.open("GET", url, true);
+     xhr.send();
 
-        }
-    }
+     function returnstuff() {
+         var popLocation= elatlng;
+         var data_array = new Int8Array(pako.ungzip(xhr.response));
+         <!--lower left corner is 2 byte actual value. Afterwards content is 1-byte change relative to adjacent value (for compression)-->
+         var first_number = 128*Number(data_array[0]) + Number(data_array[1]);
+         <!--loop through the changes in latitude-->
+         var change = 0.0;
+         <!--start at i = 1 because first corner is actual compressed value rather than change-->
+         for (let i = 1; i < iy; i++) {
+           <!--+ 1 instead of +0 because first point is 2 bytes in my compression scheme-->
+           change += Number(data_array[600*i + 1]);
+         }
+         <!--now add up changes in longitude, start at 1. This time because first value is change in latitude-->
+         for (let i = 1; i < ix; i++) {
+           <!--+ 1 instead of +0 because first point is 2 bytes in my compression scheme-->
+           change += Number(data_array[600*(iy - 1) + 1 + i]);
+         }
+         <!--now have compressed value-->
+         var compressed = first_number + change;
+
+         var brightnessRatio = compressed2full(compressed);
+
+         var mpsas = 22.0 - 5.0 * Math.log(1.0 + brightnessRatio) / Math.log(100.);
+
+         var popup = L.popup()
+             .setLatLng(popLocation)
+             .setContent('<b>Lat, Lon:</b><br>' + elatlng.lat.toFixed(4) + ', ' + elatlng.lng.toFixed(4) + '<br><b>Brightness:</b><br> ' + mpsas.toFixed(2) + ' mag/arcsec<sup>2</sup><br>' + round_brightness(brightnessRatio) + ' ratio (= artificial<br>&nbsp;&nbsp;&nbsp;&nbsp;&#247 natural brightness)')
+             .openOn(map); 
+
+         }
+   }
 
    function mod(n, m) {
      return ((n % m) + m) % m;
+   }
+
+   function compressed2full(x) {
+     return (5.0/195.0) * ( Math.exp(0.0195*x) - 1.0);
+   }
+
+   function round_brightness(b) {
+     if ( b < 0.1 ) {
+       return b.toFixed(3)
+     } else if ( b < 3 ) {
+       return b.toFixed(2)
+     } else {
+       return b.toFixed(1)
+     }
    }
 
         var control = L.control.range({
