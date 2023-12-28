@@ -3,9 +3,9 @@
 <head>
     <title>Light Pollution Atlas 2006, 2016, 2020 and 2022</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="L.Control.Range.css" />
-    <link href="../../src/AnimatedSearchBox.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://djlorenz.github.io/astronomy/lp2022/overlay/L.Control.Range.css" />
+    <link href="https://djlorenz.github.io/astronomy/src/AnimatedSearchBox.css" rel="stylesheet">
 
     <style>
         body {
@@ -16,6 +16,11 @@
             height: 100%;
             width: 100%;
         }
+        sup {
+            vertical-align: baseline;
+            position: relative;
+            top: -0.4em;
+        }
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -25,208 +30,346 @@
 
     <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="L.Control.Range.js"></script>
-    <script src="../../src/AnimatedSearchBox.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/lp2022/overlay/L.Control.Range.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/src/AnimatedSearchBox.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/src/pako_inflate.min.js"></script>
     
-    <script>
+<script>
 
-      mapLink = '<a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a>';
-      infoLink = '<a href="https://djlorenz.github.io/astronomy/lp2016/" target="_blank">Light Pollution Atlas Information</a>';
+mapLink = '<a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a>';
+infoLink = '<a href="https://djlorenz.github.io/astronomy/lp2016/" target="_blank">Light Pollution Atlas Information</a>';
 
-      var standard = L.tileLayer(
-          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; ' + mapLink + ' Contributors | ' + infoLink,
-          maxZoom: 19
-          })
+var standard = L.tileLayer(
+    'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; ' + mapLink + ' Contributors | ' + infoLink,
+        maxZoom: 19
+    })
 
-      var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community  | ' + infoLink,
-          maxZoom: 19
-          });
+var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community  | ' + infoLink,
+    maxZoom: 19
+});
 
-      var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-          attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community  | ' + infoLink,
-          maxZoom: 19
-          });
+var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community  | ' + infoLink,
+    maxZoom: 19
+});
+
+var topo = L.tileLayer(
+    'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>) | ' + infoLink,
+        maxZoom: 19
+    })
+
+var lightpollution2006 = L.tileLayer(
+    'https://djlorenz.github.io/astronomy/lp2006/overlay/tiles/tile_{z}_{x}_{y}.png', {
+        minZoom: 2,
+        maxNativeZoom: 8,
+        maxZoom: 19,
+        tileSize: 1024,
+        zoomOffset: -2,
+        opacity: 0.5
+    })
+
+var lightpollution2016 = L.tileLayer(
+    'https://djlorenz.github.io/astronomy/lp2016/overlay/tiles/tile_{z}_{x}_{y}.png', {
+        minZoom: 2,
+        maxNativeZoom: 8,
+        maxZoom: 19,
+        tileSize: 1024,
+        zoomOffset: -2,
+        opacity: 0.5
+    })
+
+var lightpollution2020 = L.tileLayer(
+    'https://djlorenz.github.io/astronomy/lp2020/overlay/tiles/tile_{z}_{x}_{y}.png', {
+        minZoom: 2,
+        maxNativeZoom: 8,
+        maxZoom: 19,
+        tileSize: 1024,
+        zoomOffset: -2,
+        opacity: 0.5
+    })
+
+var lightpollution2022 = L.tileLayer(
+    'https://djlorenz.github.io/astronomy/lp2022/overlay/tiles/tile_{z}_{x}_{y}.png', {
+        minZoom: 2,
+        maxNativeZoom: 8,
+        maxZoom: 19,
+        tileSize: 1024,
+        zoomOffset: -2,
+        opacity: 0.5
+    })
+
+var trend_2013_2022 = L.tileLayer(
+    'https://djlorenz.github.io/astronomy/lp2022/overlay/trend_2013_2022/tile_{z}_{x}_{y}.png', {
+        minZoom: 2,
+        maxNativeZoom: 8,
+        maxZoom: 19,
+        tileSize: 1024,
+        zoomOffset: -2,
+        opacity: 0.5
+    })
+
+var map = L.map('map', {
+    center: [0, 0],
+    zoom: 2,
+    layers: [standard, lightpollution2016],
+    tap: false
+});
+
+var baseLayers = {
+    "OpenStreetMap": standard,
+    "Esri WorldImagery": Esri_WorldImagery,
+    "Esri WorldTopoMap": Esri_WorldTopoMap,
+    "OpenTopoMap": topo
+};
+
+var overlays = {
+    '<a href="https://djlorenz.github.io/astronomy/lp2006/" target="_blank">2006 light pollution</a><br>2006 is an old satellite,<br>compare with caution': lightpollution2006,
+    '<a href="https://djlorenz.github.io/astronomy/lp2016/" target="_blank">2016 light pollution</a>': lightpollution2016,
+    '<a href="https://djlorenz.github.io/astronomy/lp2020/" target="_blank">2020 light pollution</a>': lightpollution2020,
+    '<a href="https://djlorenz.github.io/astronomy/lp2022/" target="_blank">2022 light pollution</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://djlorenz.github.io/astronomy/lp2022/colors.html" target="_blank">Color Key</a>': lightpollution2022,
+    '<a href="https://djlorenz.github.io/astronomy/lp2022/trend.html" target="_blank">2013-2022 trend</a>': trend_2013_2022
+};
+
+var options = {
+    position: 'topleft'
+};
+
+var popup;
+var popuplatlng;
+
+L.control.layers(baseLayers, overlays, options).addTo(map);
+
+L.control.scale({maxWidth: 200, position: 'topright'}).addTo(map);
+
+map.on('overlayadd', function(eo) {
+    if (eo.layer !== lightpollution2006) {
+        if ( map.hasLayer(lightpollution2006) ) {
+            setTimeout(function(){map.removeLayer(lightpollution2006)}, 10); } }
+    if (eo.layer !== lightpollution2016) {
+        if ( map.hasLayer(lightpollution2016) ) {
+            setTimeout(function(){map.removeLayer(lightpollution2016)}, 10); } }
+    if (eo.layer !== lightpollution2020) {
+        if ( map.hasLayer(lightpollution2020) ) {
+            setTimeout(function(){map.removeLayer(lightpollution2020)}, 10); } }
+    if (eo.layer !== lightpollution2022) {
+        if ( map.hasLayer(lightpollution2022) ) {
+            setTimeout(function(){map.removeLayer(lightpollution2022)}, 10); } }
+    if (eo.layer !== trend_2013_2022) {
+        if ( map.hasLayer(trend_2013_2022) ) {
+            setTimeout(function(){map.removeLayer(trend_2013_2022)}, 10); } }
+    if (popup !== undefined) {
+        if (popup.isOpen()) {
+            if ( eo.layer == lightpollution2022 ) {
+                var year = 2022;
+            } else if ( eo.layer == lightpollution2020 ) {
+                var year = 2020;
+            } else if ( eo.layer == lightpollution2016 ) {
+                var year = 2016;
+            } else if ( eo.layer == lightpollution2006 ) {
+                var year = 2006;
+            } else {
+                var year = 0
+            }
+            map.closePopup();
+            getInfoFromLonLat(popuplatlng,year);
+        }
+    }
+});
+
+// search box code
+var searchbox = L.control.searchbox({
+    position: 'topright',
+    expand: 'left',
+    width: '125px'
+}).addTo(map);
+
+var message = "Lat, Lon, then Enter"
+
+searchbox.setValue(message)
+
+searchbox.onInput("keyup", function (e) {
+    var start = searchbox.getValue().replace(message,'');
+    searchbox.clear();
+    searchbox.setValue(start);
+    if (e.keyCode == 13) {
+        if( searchbox.getValue() !== "") {
+            var values = searchbox.getValue().split(',');
+            var lat = values[0].replace(/[()]/g, '');
+            var lng = values[1].replace(/[()]/g, '');
+            if( !isNaN(lat) && !isNaN(lng) ) {
+		
+                if( lat >= -80 && lat <= 80 && lng >= -360 && lng <= 360 ) {
+		    
+                    var marker = L.marker([lat,lng], {
+                        title: "Lat, Lon = "+lat+", "+lng,
+                        opacity: 0.7
+			
+                    }).addTo(map);
+                    var zoom = Math.max( map.getZoom(), 8 );
+                    map.flyTo([lat, lng],zoom);
+                    searchbox.clear();
+                    searchbox.hide();
+                } else {
+                    alert("\"" + searchbox.getValue() + "\" is out of bounds:\r\n -80 <= lat <= 80 and\r\n -360 <= lon <= 360");
+                    searchbox.clear();
+                    searchbox.hide();
+                }
+            } else {
+                alert("\"" + searchbox.getValue() + "\" is not a valid input\r\nType Lat, Lon, then Enter");
+                searchbox.clear();
+                searchbox.hide();
+		
+            }
+        } else {
+            searchbox.clear();
+            searchbox.hide();
+        }
+    }
+});
+
+map.on('click', function(e) {
+
+    // get year of current displayed overlay
+    if ( map.hasLayer(lightpollution2022) ) {
+	var year = 2022;
+    } else if ( map.hasLayer(lightpollution2020) ) {
+	var year = 2020;
+    } else if ( map.hasLayer(lightpollution2016) ) {
+	var year = 2016;
+    } else if ( map.hasLayer(lightpollution2006) ) {
+	var year = 2006;
+    } else {
+	var year = 0
+    }
     
-      var topo = L.tileLayer(
-          'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-          attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>) | ' + infoLink,
-          maxZoom: 19
-          })
+    getInfoFromLonLat(e.latlng,year);
+    // save lat and lon of popup to update popup in case overlay changes: 
+    popuplatlng = e.latlng
     
-      var lightpollution2006 = L.tileLayer(
-          'https://djlorenz.github.io/astronomy/lp2006/overlay/tiles/tile_{z}_{x}_{y}.png', {
-           minZoom: 2,
-           maxNativeZoom: 8,
-           maxZoom: 19,
-           tileSize: 1024,
-           zoomOffset: -2,
-           opacity: 0.5
-          })
+});
 
-      var lightpollution2016 = L.tileLayer(
-          'tiles/tile_{z}_{x}_{y}.png', {
-           minZoom: 2,
-           maxNativeZoom: 8,
-           maxZoom: 19,
-           tileSize: 1024,
-           zoomOffset: -2,
-           opacity: 0.5
-          })
-
-      var lightpollution2020 = L.tileLayer(
-          'https://djlorenz.github.io/astronomy/lp2020/overlay/tiles/tile_{z}_{x}_{y}.png', {
-           minZoom: 2,
-           maxNativeZoom: 8,
-           maxZoom: 19,
-           tileSize: 1024,
-           zoomOffset: -2,
-           opacity: 0.5
-          })
-
-      var lightpollution2022 = L.tileLayer(
-          'https://djlorenz.github.io/astronomy/lp2022/overlay/tiles/tile_{z}_{x}_{y}.png', {
-           minZoom: 2,
-           maxNativeZoom: 8,
-           maxZoom: 19,
-           tileSize: 1024,
-           zoomOffset: -2,
-           opacity: 0.5
-          })
-
-      var trend_2013_2022 = L.tileLayer(
-          'https://djlorenz.github.io/astronomy/lp2022/overlay/trend_2013_2022/tile_{z}_{x}_{y}.png', {
-           minZoom: 2,
-           maxNativeZoom: 8,
-           maxZoom: 19,
-           tileSize: 1024,
-           zoomOffset: -2,
-           opacity: 0.5
-          })
-
-      var map = L.map('map', {
-  		center: [0, 0],
-		zoom: 2,
-                layers: [standard, lightpollution2016]
-  	});
+function getInfoFromLonLat(elatlng,year) {
+    var xhr;
     
-       var baseLayers = {
-	       "OpenStreetMap": standard,
-	       "Esri WorldImagery": Esri_WorldImagery,
-	       "Esri WorldTopoMap": Esri_WorldTopoMap,
-	       "OpenTopoMap": topo
+    if ( year == 0 ) {
+	return;
+    }
+    
+    //figure out which tile has binary data. Each tile is 600 x 600 points (1/120 degree resolution)
+    var lonFromDateLine = mod(elatlng.lng + 180.0,360.0);
+    var latFromStart = elatlng.lat + 65.0;
+    var tilex = Math.floor(lonFromDateLine/5.0) + 1;
+    var tiley = Math.floor(latFromStart/5.0) + 1;
+    
+    if ( tiley >= 1 && tiley <= 28 ) {
+	
+	var url = "https://djlorenz.github.io/astronomy/binary_tiles/" + year + "/binary_tile_" + tilex + "_" + tiley + ".dat.gz";
+	
+	
+	//figure out location of nearset grid point in tile
+	var ix = Math.round( 120.*(lonFromDateLine - 5.0*(tilex - 1) + 1./240.) );
+	var iy = Math.round( 120.*(latFromStart    - 5.0*(tiley - 1) + 1./240.) );
+	
+	
+	xhr = new XMLHttpRequest();
+	xhr.responseType = 'arraybuffer';
+	xhr.onload = LpAtlasInBounds;
+	xhr.open("GET", url, true);
+	xhr.send();
+	
+	function LpAtlasInBounds() {
+            var popLocation= elatlng;
+            var data_array = new Int8Array(pako.ungzip(xhr.response));
+	    //lower left corner is 2 byte actual value. Afterwards content is 1-byte change relative to adjacent value (for compression)
+	    var first_number = 128*Number(data_array[0]) + Number(data_array[1]);
+	    //loop through the changes in latitude
+	    var change = 0.0;
+	    //start at i = 1 because first corner is actual compressed value rather than change
+	    for (let i = 1; i < iy; i++) {
+		//+ 1 instead of +0 because first point is 2 bytes in my compression scheme
+		change += Number(data_array[600*i + 1]);
+	    }
+	    //now add up changes in longitude, start at 1. This time because first value is change in latitude
+	    for (let i = 1; i < ix; i++) {
+		//+ 1 instead of +0 because first point is 2 bytes in my compression scheme
+		change += Number(data_array[600*(iy - 1) + 1 + i]);
+	    }
+	    //now have compressed value
+	    var compressed = first_number + change;
+	    
+            var brightnessRatio = compressed2full(compressed);
+	    
+            var mpsas = 22.0 - 5.0 * Math.log(1.0 + brightnessRatio) / Math.log(100.);
+	    
+            popup = L.popup()
+		.setLatLng(popLocation)
+		.setContent('<b>Year:</b> ' + year + '<br><b>Lat, Lon:</b><br>' + elatlng.lat.toFixed(4) + ', ' + (lonFromDateLine - 180).toFixed(4) + '<br><b>Brightness:</b><br> ' + mpsas.toFixed(2) + ' mag/arcsec<sup>2</sup><br>' + round_brightness(brightnessRatio) + ' ratio (= artificial<br>&nbsp;&nbsp;&nbsp;&nbsp;&#247 natural brightness)')
+		.openOn(map); 
+	    
 	};
-
-       var overlays = {
-	       '<a href="https://djlorenz.github.io/astronomy/lp2006/" target="_blank">2006 light pollution</a>': lightpollution2006,
-	       '<a href="https://djlorenz.github.io/astronomy/lp2016/" target="_blank">2016 light pollution</a>': lightpollution2016,
-	       '<a href="https://djlorenz.github.io/astronomy/lp2020/" target="_blank">2020 light pollution</a>': lightpollution2020,
-	       '<a href="https://djlorenz.github.io/astronomy/lp2022/" target="_blank">2022 light pollution</a><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://djlorenz.github.io/astronomy/lp2022/colors.html" target="_blank">Color Key</a>': lightpollution2022,
-	       '<a href="https://djlorenz.github.io/astronomy/lp2022/trend.html" target="_blank">2013-2022 trend</a>': trend_2013_2022
+	
+    } else {
+	// out of bounds case:
+	LpAtlasOutBounds();
+	
+	function LpAtlasOutBounds() {
+            var popLocation= elatlng;
+	    
+            var popup = L.popup()
+		.setLatLng(popLocation)
+		.setContent('<b>Lat, Lon:</b><br>' + elatlng.lat.toFixed(4) + ', ' + (lonFromDateLine - 180).toFixed(4) + '<br>Clicked location is<br>out of bounds.<br>Limit of atlas is<br>65S to 75N latitude')
+		.openOn(map); 
+	    
 	};
+	
+    }
+};
 
-       var options = {
-            position: 'topleft'
-       };
+// javascript is weird for remainder with negative numbers, so make real modulo function:
+function mod(n, m) {
+    return ((n % m) + m) % m;
+}
 
-       L.control.layers(baseLayers, overlays, options).addTo(map);
+// function to convert compressed integers to brightness ratio: 
+function compressed2full(x) {
+    return (5.0/195.0) * ( Math.exp(0.0195*x) - 1.0);
+}
 
-       L.control.scale({maxWidth: 200, position: 'topright'}).addTo(map);
+// rules for rounding brightness ratio
+function round_brightness(b) {
+    if ( b < 0.1 ) {
+	return b.toFixed(3)
+    } else if ( b < 3 ) {
+	return b.toFixed(2)
+    } else {
+	return b.toFixed(1)
+    }
+}
 
-       map.on('overlayadd', function(eo) {
-                if (eo.layer !== lightpollution2006) {
-                   if ( map.hasLayer(lightpollution2006) ) {
-                      setTimeout(function(){map.removeLayer(lightpollution2006)}, 10); } }
-                if (eo.layer !== lightpollution2016) {
-                   if ( map.hasLayer(lightpollution2016) ) {
-                      setTimeout(function(){map.removeLayer(lightpollution2016)}, 10); } }
-                if (eo.layer !== lightpollution2020) {
-                   if ( map.hasLayer(lightpollution2020) ) {
-                      setTimeout(function(){map.removeLayer(lightpollution2020)}, 10); } }
-                if (eo.layer !== lightpollution2022) {
-                   if ( map.hasLayer(lightpollution2022) ) {
-                      setTimeout(function(){map.removeLayer(lightpollution2022)}, 10); } }
-                if (eo.layer !== trend_2013_2022) {
-                   if ( map.hasLayer(trend_2013_2022) ) {
-                      setTimeout(function(){map.removeLayer(trend_2013_2022)}, 10); } }
-		});
+var control = L.control.range({
+    position: 'topright',
+    min: 0,
+    max: 100,
+    value: 50,
+    step: 1,
+    orient: 'vertical',
+    icon: false
+});
+control.on('change input', function(e) {
+    lightpollution2006.setOpacity(e.value / 100);
+    lightpollution2016.setOpacity(e.value / 100);
+    lightpollution2020.setOpacity(e.value / 100);
+    lightpollution2022.setOpacity(e.value / 100);
+    trend_2013_2022.setOpacity(e.value / 100);
+})
 
-       var searchbox = L.control.searchbox({
-           position: 'topright',
-           expand: 'left',
-           width: '125px'
-       }).addTo(map);
+map.addControl(control);
 
-       var message = "Lat, Lon, then Enter"
-
-       searchbox.setValue(message)
-
-       searchbox.onInput("keyup", function (e) {
-           var start = searchbox.getValue().replace(message,'');
-           searchbox.clear();
-           searchbox.setValue(start);
-           if (e.keyCode == 13) {
-               if( searchbox.getValue() !== "") {
-               var values = searchbox.getValue().split(',');
-               var lat = values[0].replace(/[()]/g, '');
-               var lng = values[1].replace(/[()]/g, '');
-               if( !isNaN(lat) && !isNaN(lng) ) {
-
-                   if( lat >= -80 && lat <= 80 && lng >= -360 && lng <= 360 ) {
-
-                       var marker = L.marker([lat,lng], {
-                           title: "Lat, Lon = "+lat+", "+lng,
-                           opacity: 0.7
-
-                       }).addTo(map);
-                       var zoom = Math.max( map.getZoom(), 8 );
-                       map.flyTo([lat, lng],zoom);
-                       searchbox.clear();
-                       searchbox.hide();
-                   } else {
-                       alert("\"" + searchbox.getValue() + "\" is out of bounds:\r\n -80 <= lat <= 80 and\r\n -360 <= lon <= 360");
-                      searchbox.clear();
-                      searchbox.hide();
-                   }
-               } else {
-                  alert("\"" + searchbox.getValue() + "\" is not a valid input\r\nType Lat, Lon, then Enter");
-                  searchbox.clear();
-                  searchbox.hide();
-
-               }
-               } else {
-                  searchbox.clear();
-                  searchbox.hide();
-               }
-           }
-       });
-
-    </script>
-    <script>
-
-        var control = L.control.range({
-            position: 'topright',
-            min: 0,
-            max: 100,
-            value: 50,
-            step: 1,
-            orient: 'vertical',
-            icon: false
-        });
-        control.on('change input', function(e) {
-            console.log(e.value);
-            lightpollution2006.setOpacity(e.value / 100);
-            lightpollution2016.setOpacity(e.value / 100);
-            lightpollution2020.setOpacity(e.value / 100);
-            lightpollution2022.setOpacity(e.value / 100);
-            trend_2013_2022.setOpacity(e.value / 100);
-        })
-
-        map.addControl(control);
-
-   </script>
+</script>
 
 </body>
 </html>
