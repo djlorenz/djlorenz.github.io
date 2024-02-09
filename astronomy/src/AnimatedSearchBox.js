@@ -22,7 +22,7 @@
             expand: 'left',
             collapsed: true,
             width: null,
-            iconPath: '../../src/img/search_icon.png',
+            iconPath: 'https://djlorenz.github.io/astronomy/src/img/search_icon.png',
             autocompleteFeatures: ['setValueOnClick']
         },
 
