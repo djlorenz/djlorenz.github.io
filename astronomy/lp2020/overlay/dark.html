@@ -4,6 +4,7 @@
     <title>Light Pollution Atlas 2006, 2016, 2020 and 2022</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://djlorenz.github.io/astronomy/src/Control.Geocoder.css" />
     <link rel="stylesheet" href="https://djlorenz.github.io/astronomy/lp2022/overlay/L.Control.Range.css" />
     <link href="https://djlorenz.github.io/astronomy/src/AnimatedSearchBox.css" rel="stylesheet">
 
@@ -31,6 +32,7 @@
     <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://djlorenz.github.io/astronomy/src/Control.Geocoder.js"></script>
     <script src="https://djlorenz.github.io/astronomy/lp2022/overlay/L.Control.Range.js"></script>
     <script src="https://djlorenz.github.io/astronomy/src/AnimatedSearchBox.js"></script>
     <script src="https://djlorenz.github.io/astronomy/src/pako_inflate.min.js"></script>
@@ -145,6 +147,27 @@ L.control.layers(baseLayers, overlays, options).addTo(map);
 
 L.control.scale({maxWidth: 200, position: 'topright'}).addTo(map);
 
+var geocoder = L.Control.geocoder({
+    defaultMarkGeocode: false
+})
+    .on('markgeocode', function(e) {
+	var center = e.geocode.center;
+	var lat = center.lat;
+	var lng = center.lng;
+	if( lat >= -80 && lat <= 80 && lng >= -360 && lng <= 360 ) {
+	    var marker = L.marker([lat,lng], {
+		title: "Lat, Lon = "+lat+", "+lng,
+		opacity: 0.7
+	    }).addTo(map);
+	    var zoom = Math.max( map.getZoom(), 8 );
+	    map.flyTo([lat, lng],zoom);
+	} else {
+            alert("\"" + lat + " " + lng + "\" is out of bounds:\r\n -80 <= lat <= 80 and\r\n -360 <= lon <= 360");
+        }
+    })
+    .addTo(map);
+
+
 map.on('overlayadd', function(eo) {
     if (eo.layer !== lightpollution2006) {
         if ( map.hasLayer(lightpollution2006) ) {
@@ -176,57 +199,6 @@ map.on('overlayadd', function(eo) {
             }
             map.closePopup();
             getInfoFromLonLat(popuplatlng,year);
-        }
-    }
-});
-
-// search box code
-var searchbox = L.control.searchbox({
-    position: 'topright',
-    expand: 'left',
-    width: '125px'
-}).addTo(map);
-
-var message = "Lat, Lon, then Enter"
-
-searchbox.setValue(message)
-
-searchbox.onInput("keyup", function (e) {
-    var start = searchbox.getValue().replace(message,'');
-    searchbox.clear();
-    searchbox.setValue(start);
-    if (e.keyCode == 13) {
-        if( searchbox.getValue() !== "") {
-            var values = searchbox.getValue().split(',');
-            var lat = values[0].replace(/[()]/g, '');
-            var lng = values[1].replace(/[()]/g, '');
-            if( !isNaN(lat) && !isNaN(lng) ) {
-		
-                if( lat >= -80 && lat <= 80 && lng >= -360 && lng <= 360 ) {
-		    
-                    var marker = L.marker([lat,lng], {
-                        title: "Lat, Lon = "+lat+", "+lng,
-                        opacity: 0.7
-			
-                    }).addTo(map);
-                    var zoom = Math.max( map.getZoom(), 8 );
-                    map.flyTo([lat, lng],zoom);
-                    searchbox.clear();
-                    searchbox.hide();
-                } else {
-                    alert("\"" + searchbox.getValue() + "\" is out of bounds:\r\n -80 <= lat <= 80 and\r\n -360 <= lon <= 360");
-                    searchbox.clear();
-                    searchbox.hide();
-                }
-            } else {
-                alert("\"" + searchbox.getValue() + "\" is not a valid input\r\nType Lat, Lon, then Enter");
-                searchbox.clear();
-                searchbox.hide();
-		
-            }
-        } else {
-            searchbox.clear();
-            searchbox.hide();
         }
     }
 });
