@@ -46,7 +46,6 @@ background-image:url(../../images/lower420.png);
 
   <p class="indent"><a class="small" href="method.html">Method</a></p>
   <p class="indent"><a class="small" href="crossval.html">Cross Validation</a></p>
-  <p class="indent"><a class="small" href="PRISM.html">Adjustment to PRISM and Canadian Normals Data</a></p>
 
   <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
   <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
@@ -63,7 +62,7 @@ background-image:url(../../images/lower420.png);
   <p class="medium">Method</p>
 
   <p class="normal"> 
-  Under Construction
+  Provided certain assumptions hold, Kriging is best linear unbiased interpolator. However, for our situation, Kriging can be problematic because the station weights can sometimes be negative, which will lead to unrealistic negative precipitation. Therefore a modified version of Kriging is developed in which each station weight in constrained to be greater than or equal to zero. While this solves the negative precipitation issue, it also inhibits the ability of Kriging to extrapolate beyond the range of the station values. To fix this issue, the station values are first normalized by the PRISM climatology (divide by climatology for precipitation, subtract climatology for temperature), next this quantity is interpolated via modified Kriging, and finally the gridded PRSIM climatology is applied.
   </p>
 
   <hr>

@@ -45,7 +45,6 @@ background-image:url(../../images/lower420.png);
 
   <p class="indent"><a class="small" href="source.html">Data Sources</a></p>
   <p class="indent"><a class="small" href="hour.html">Hour of Observation</a></p>
-  <p class="indent"><a class="small" href="day.html">Day of Observation</a></p>
   <p class="indent"><a class="small" href="bias.html">Precipitation Biases</a></p>
 
   <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
@@ -64,9 +63,14 @@ background-image:url(../../images/lower420.png);
   <p class="medium">Hour of Observation</p>
 
   <p class="normal"> 
-  Under Construction
+  For many stations the hour of observation given in the Metadata is incorrect. This fact is obvious when looking at temporally lagged correlations between nearby stations. An iterative method to correct the hour of observation errors was developed based on the observed versus the expected lagged correlation. The station with worst agreement between observed and expected is corrected first. Then all lagged correlations are completed again, and the next worst station is corrected until some threshold. 
   </p>
 
+  <p class="normal">
+  In some cases the day of observation is incorrect due to the volunteer observer's misunderstanding. For example, a morning observation is sometimes incorrectly labeled as the previous day because the majority of the 24-hour period is in the preceding day. These type errors are also corrected using the above method.
+  </p>
+
+  
   <hr>
   <a href="../../">Home</a>
   
