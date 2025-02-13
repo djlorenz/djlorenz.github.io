@@ -62,7 +62,7 @@ background-image:url(../../images/lower420.png);
   <p class="medium">Method</p>
 
   <p class="normal"> 
-  Provided certain assumptions hold, Kriging is best linear unbiased interpolator. However, for our situation, Kriging can be problematic because the station weights can sometimes be negative, which will lead to unrealistic negative precipitation. Therefore a modified version of Kriging is developed in which each station weight in constrained to be greater than or equal to zero. While this solves the negative precipitation issue, it also inhibits the ability of Kriging to extrapolate beyond the range of the station values. To fix this issue, the station values are first normalized by the PRISM climatology (divide by climatology for precipitation, subtract climatology for temperature), next this quantity is interpolated via modified Kriging, and finally the gridded PRSIM climatology is applied.
+  Provided certain assumptions hold, Kriging is best linear unbiased interpolator. However, for our situation, Kriging can be problematic because the station weights can sometimes be negative, which will lead to unrealistic negative precipitation. Therefore a modified version of Kriging is developed in which each station weight is constrained to be greater than or equal to zero. While this solves the negative precipitation issue, it also inhibits the ability of Kriging to extrapolate beyond the range of the station values. To fix this issue, the station values are first normalized by the PRISM climatology (divide by climatology for precipitation, subtract climatology for temperature), next this quantity is interpolated via modified Kriging, and finally the gridded PRSIM climatology is reapplied.
   </p>
 
   <hr>
