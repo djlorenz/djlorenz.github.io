@@ -156,7 +156,7 @@ a & = \langle \eta_{a} \rangle = \langle  a_0 + a_1x_1(t) + a_2x_2(t) + \ldots \
 \mu & = \langle \eta_{\mu} \rangle = \langle  b_0 + b_1x_1(t) + b_2x_2(t) + \ldots \rangle 
 \end{split}
 \end{equation}  
-Note that both $a$ and $\mu$ depend on time for our model, but we leave out the explicit time dependence in equation (\ref{eqn:p_am_gam2}) so that it is more readable. The gamma distribution model is fit by the method of maximum likelihood, which finds the constants $a_i$ and $b_i$ on the right side of equations (\ref{eqn:mu_a}). 
+Note that both $a$ and $\mu$ depend on time for our model, but we leave out the explicit time dependence in equation (\ref{eqn:p_am_gam2}) so that it is more readable. The gamma distribution model is fit by the method of maximum likelihood, which finds the constants $a_i$ and $b_i$ on the right side of equations (6). 
   </p>
   <p class="normal"> 
   This statistical model is not a generalized linear model even though the gamma distribution is a member of the exponential family of distributions. The reason is that the shape parameter must be independent of the predictors, $x_i(t)$, for generalized linear models, but we have found that the shape parameter varies significantly with the predictors (see Figure 2).
@@ -179,7 +179,7 @@ The key generalization in equation (\ref{eqn:p_am_ggam}) is the addition of $c$ 
 \begin{equation}\label{eqn:mom_ggam}  
 \mu = b\frac{\Gamma\left(\frac{a+1}{c}\right)}{\Gamma\left(\frac{a}{c}\right)}
 \end{equation}  
-The mean, $\mu$, and the shape, $a$, depend on the large-scale predictors in the same way as the gamma distribution (equation \ref{eqn:mu_a}). After $\mu$ and $a$ are known, we use equation (\ref{eqn:mom_ggam}) to find $b$.
+The mean, $\mu$, and the shape, $a$, depend on the large-scale predictors in the same way as the gamma distribution (equation 6). After $\mu$ and $a$ are known, we use equation (\ref{eqn:mom_ggam}) to find $b$.
   </p>
   <p class="normal"> 
   The procedure for estimating the parameter $c$ for the generalized gamma distribution is different than that for the other distributions. Because $c$ is meant to capture the extremes, which by definition are very rare, we do not estimate $c$ individually for each station like we do for the other parameters. Instead $c$ is fit region by region by aggregating at least 200 stations together. The details will be described later.
