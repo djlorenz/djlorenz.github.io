@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+
+  <p class="indent"><a class="small" href="source.html">Data Sources</a></p>
+  <p class="indent"><a class="small" href="hour.html">Hour of Observation</a></p>
+  <p class="indent"><a class="small" href="bias.html">Precipitation Biases</a></p>
+
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Data and Data Quality Control</p>
+  <p class="medium">Precipitation Biases</p>
+
+  <p class="normal"> 
+  Many COOP stations report days with weak precipitation as zero precipitation leading to an under-reporting of "wet days" and an artificial precipitation amount histogram. These same stations also tend to round precipitation to the nearest 5 hundredths of an inch instead of the nearest hundredth of an inch (see <a href="https://journals.ametsoc.org/view/journals/bams/88/6/bams-88-6-899.xml" target="_blank">Daly et al. 2007</a>). For the CMIP5 downscaling, poor stations were identified by calculating the ratio of days with precipitation amounts from 1 to 4 hundredths of an inch to the days with 5 hundredths of an inch. The poor stations are then discarded from any further calculations. For the new CMIP6 downscaling, a new method for correcting the bias that keeps the station is used.
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>

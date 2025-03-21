@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  
+  <p class="indent"><a class="small" href="temp.html">Temperature</a></p>
+  <p class="indent"><a class="small" href="prcp.html">Precipitation - Basics</a></p>
+  <p class="indent"><a class="small" href="pocc.html">Precipitation Occurrence</a></p>
+  <p class="indent"><a class="small" href="pam.html">Precipitation Amount</a></p>
+  
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Statistical Models</p>
+  <p class="medium">Precipitation - Basics</p>
+
+  <p class="normal"> 
+  In contrast to maximum and minimum temperature, the distribution of precipitation is strongly non-normal. The most obvious departure from normality is the sharp lower bound on precipitation amount--you can't have negative precipitation! But precipitation strongly departs from normality in other ways, too. For example, at Madison, WI approximately 67% of days have exactly the same value for precipitation, namely zero. Moreover, when precipitation does occur the most likely precipitation amount is the smallest measureable value, yet precipitation distribution also has a long tail consisting of rare but very large amounts (Figure 1).
+  </p>
+
+<div id="figure">
+  <img src="P_obs_pdf.png" style="max-width:100%;">
+  <p class="caption">Figure 1: Histogram of daily precipitation accumulation at Madison, WI for wet days only. a) January. b) July. The y-axis is the number of days in each bin divided by the total number of days (%) and the x-axis is the precipitation amount at the bin center in mm. The bin width is 0.254 mm.</p>
+</div>
+
+  <p class="normal"> 
+  To model the relationship between large-scale variables and the precipitation at a point, we follow the methodology commonly used in the "weather generator" <a href="http://ppg.sagepub.com/content/23/3/329.short" target="_blank">literature</a> where the simulation of precipitation is divided into two separate models. One model predicts whether the day is wet or dry (precipitation occurrence model) and another model predicts the amount of precipitation if the day is wet (precipitation amount model).
+  </p>
+
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>

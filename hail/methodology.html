@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Hail Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Hail Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Downscaled Hail, Climate Change, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+<body>
+
+<div id="container">
+  
+
+<div id="content">
+  
+  <p class="bigbold">Statistically Downscaled Hail Projections</p>
+  <p class="big">Data</p>
+
+  <p class="normal">
+  The hail data is from the National Climatic Data Center's <a href="https://www.ncdc.noaa.gov/stormevents/" target="_blank">Storm Events Database</a> and the large-scale atmospheric wind, temperature and moisture data are from the <a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" target="_blank">ERA-Interim Reanalysis</a>. The hail data is "upscaled" by counting the number reports of severe hail (> 0.75 inches) within each 1.5&ordmx1.5&ordm longitude/latitude grid box of the ERA interim Reanalysis.
+  </p>
+
+  <p class="normal">
+  The hail data is not stationary in time. Instead the hail reports increase exponentially in time due to changes in the National Weather Service (NWS) reporting system and due to other society related changes. A time series of the number of severe hail reports is shown below as a function of year. A large number of years of data is beneficial for fitting the statistical models. At the same time, the non-stationarity of the data is an important issue. For this study, we feel a good compromise is to fit the statistical models using the data on and after the year 1990.
+  </p>
+
+  <div style="text-align: center"><a href="peryear.png" target="_blank"><img src="peryear.png" style="max-width:60%"></a></div>
+  
+  <p class="big">Large-scale Predictors</p>
+
+  <p class="normal">
+  The large-scale predictors for estimating the probability of hail within each 1.5&ordmx1.5&ordm longitude/latitude grid box are calculated from the temperature, specific humidity and zonal and meridional wind from the <a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" target="_blank">ERA-interim Reanalysis</a>. Severe storms are more likely to occur when the <a href="https://en.wikipedia.org/wiki/Convective_available_potential_energy" target="_blank">Convective Available Potential Energy (CAPE)</a> is large. While we do find that CAPE is indeed skillful for predicting hail, we find that the <a href="https://en.wikipedia.org/wiki/Lifted_index" target="_blank">lifted index</a>, which is closely related to CAPE, performs much better. The reason is that CAPE is bounded by zero so that it cannot distinguish between states that are only slightly stable to convective motions from those that are strongly stable to convective motions. The lifted index, on the other hand, measures both the degree of instability and the degree of stability. We also find that skill improves if the rising air in the lifted index calculation is allowed to entrain air from the environment. We find that a good entrainment rate is $0.75/z$, where $z$ is the height above the ground.
+  </p>
+
+  <p class="normal">
+  <a href="https://en.wikipedia.org/wiki/Wind_shear" target="_blank">Wind shear</a> is another important ingredient for severe storms. Here we use the <a href="http://www.spc.noaa.gov/exper/soundings/help/shear.html" target="_blank">Bulk Shear</a> between 500mb and 1000mb to measure wind shear.
+  </p>
+
+  <p class="normal">
+  The <a href="" target="_blank">freezing level</a> is an important predictor for hail because it determines whether the hail has sufficient time to melt before it reaches the ground. If the hail stones are travelling through dry air, however, then evaporation from the hail stones will cool the surrounding air and will help limit the amount of melting. To take this process into account the <a href="https://en.wikipedia.org/wiki/Wet-bulb_temperature" target="_blank">wet-bulb temperature</a> is typically used in place of the temperature in the calculation of the freezing level. Rather than simply use the height where the wet-bulb temperature is zero, we consider the wet-bulb temperature along the entire path to the ground. In other words, our predictor is $\int^{z_0}_{z_g} T_w - 0^{\circ}\textrm{C} \, dz$, where $T_w$ is the wet-bulb temperature, $z_g$ is the height of the ground (i.e. elevation) and $z_0$ is the height where $T_w = 0^{\circ}\textrm{C}$.
+  </p>
+
+  <p class="normal">
+  To summarize, we use three predictors: 1) lifted index (with entrainment), 2) bulk wind shear and 3) a melting index based on wet-bulb temperature. 
+  </p>
+
+  <p class="big">Methodology</p>
+  
+  <p class="normal">
+  For this study, we do not predict the number of hail reports but simply whether hail occurs or not. To predict such yes/no occurrence data we use <a href="https://en.wikipedia.org/wiki/Logistic_regression" target="_blank">logistic regression</a>. Given some predictors and the yes/no occurrence data one wishes to predict, logistic regression gives the probability of occurrence as a function of the predictors. Here we use the three predictors listed above.
+The logistic regression is fit using daily data from 1990-2012. A separate fit is performed for each of the 12 months to take into account seasonal differences in the connection between the large-scale and the occurrence of hail. The fits are also applied separately to each grid point in the domain (105&ordmW - 66&ordmW, 24&ordmN-49&ordmN). </p>
+
+  <p class="normal">
+  We only use the results from the logistic regression when the regression has skill on independent data. When there is no skill then we assume that each day's probability of hail is simply the climatological value. Fortunately, there is skill for all locations/months that have a significant number of hail events. To gauge skill on independent data we use <a href="https://en.wikipedia.org/wiki/Cross-validation_(statistics)" target="_blank">cross validation</a>: first we set aside 1 year of the 23 years of data. Next we fit the logistic regression on remaining 22 years of data. Then we test the regression fit on the year that was set aside. We then repeat so that all years have a chance to be set aside.
+  </p>
+
+  <p class="normal">
+  Cross validation is typically used to determine the number of variables that have useful skill. Typically a portion of the dataset only uses some of the available predictors because adding more do not add skill on independent data. Unfortunately, when this procedure is used, nearby grid points sometimes choose different subsets of the 3 predictors and this leads to spatial noise in the final climate change predictions. We believe that much of this variance in the predictors chosen is due to random sampling noise, therefore we use a different approach. We instead use all 3 predictors together and the cross validation determines whether 3 predictors has skill over climatology (for the standard approach we found that 32% of grid points with skill used all three predictors). To help reduce the sampling noise with 3 predictors, we also impose a sign constraint on the regression coefficients based on the expected physical connection between each of our 3 predictors and hail. Sign constrained regression has been found to be an effective <a href="https://en.wikipedia.org/wiki/Regularization_(mathematics)" target="_blank">regularization</a> technique in certain cases (<a href="http://arxiv.org/abs/1205.0953" target="_blank">Slawski and Hein 2013</a> and <a href="https://projecteuclid.org/euclid.ejs/1370359951" target="_blank">Meinshausen 2013</a>).
+  </p>
+
+  <p class="big">Skill</p>
+
+  <p class="normal">
+  To gauge the skill of our downscaling methodology we show the <a href="http://www.cawcr.gov.au/projects/EPSverif/scores/scores.html#BSS" target="_blank">Brier Skill Score</a> and <a href="http://www.cawcr.gov.au/projects/EPSverif/scores/scores.html#reliability" target="_blank">Reliability Diagrams</a>. The Brier Skill Score is shown on a map and is given as a percentage. The Reliability Diagram is averaged over the entire spatial domain to reduce noise. All statistics are cross-validated. In other words, the logistic regression has not "seen" the data that is used for validating the regression and so these tests measure the true skill on independent data. 
+  </p>
+
+  <a href="bsscr.png" target="_blank"><img src="bsscr.png" style="max-width:100%; margin:20px 0px"></a>
+
+  <a href="relicr.png" target="_blank"><img src="relicr.png" style="max-width:100%; margin:20px 0px"></a>
+
+<!-- <a href="" target="_blank"></a> -->
+
+  <p class="big">Climate Models</p>
+
+  <p class="normal"> 
+  After determining the relationship between the large-scale atmospheric state and hail in observations, we apply this relationship to the climate models to estimate hail given the large-scale from the climate models. The climate models are from the <a href="http://www-pcmdi.llnl.gov/ipcc/model_documentation/ipcc_model_documentation.php" target="_blank">CMIP3</a> archive, a critical source of data to the <a href="http://www.ipcc.ch/publications_and_data/ar4/wg1/en/contents.html" target="_blank">Fourth Assessment Report</a> of the Intergovernmental Panel on Climate Change (IPCC AR4). There are 13 models with enough daily data for us to downscale:
+  </p>
+
+<table border="1">
+<tr>
+<th>Originating Group(s)</th>
+<th>Country</th>
+<th>CMIP3 I.D.</th>
+</tr>
+<tr>
+<td>Canadian Centre for Climate Modelling & Analysis</td>
+<td>Canada</td>
+<td>CGCM3.1(T47)</td>
+</tr>
+<tr>
+<td>Canadian Centre for Climate Modelling & Analysis</td>
+<td>Canada</td>
+<td>CGCM3.1(T63)</td>
+</tr>
+<tr>
+<td>Meteo-France / Centre National de Recherches Meteorologiques</td>
+<td>France</td>
+<td>CNRM-CM3</td>
+</tr>
+<tr>
+<td>CSIRO Atmospheric Research</td>
+<td>Australia</td>
+<td>CSIRO-Mk3.0</td>
+</tr>
+<tr>
+<td>CSIRO Atmospheric Research</td>
+<td>Australia</td>
+<td>CSIRO-Mk3.5</td>
+</tr>
+<tr>
+<td>US Dept. of Commerce / NOAA / Geophysical Fluid Dynamics Laboratory</td>
+<td>USA</td>
+<td>GFDL-CM2.0</td>
+</tr>
+<tr>
+<td>NASA / Goddard Institute for Space Studies</td>
+<td>USA</td>
+<td>GISS-AOM</td>
+</tr>
+<tr>
+<td>NASA / Goddard Institute for Space Studies</td>
+<td>USA</td>
+<td>GISS-ER</td>
+</tr>
+<tr>
+<td>LASG / Institute of Atmospheric Physics</td>
+<td>China</td>
+<td>FGOALS-g1.0</td>
+</tr>
+<tr>
+<td>Center for Climate System Research (The University of Tokyo), National Institute for Environmental Studies, and Frontier Research Center for Global Change (JAMSTEC)</td>
+<td>Japan</td>
+<td>MIROC3.2(hires)</td>
+</tr>
+<tr>
+<td>Meteorological Institute of the University of Bonn, Meteorological Research Institute of KMA, and Model and Data group</td>
+<td>Germany / Korea</td>
+<td>ECHO-G</td>
+</tr>
+<tr>
+<td>Max Planck Institute for Meteorology</td>
+<td>Germany</td>
+<td>ECHAM5/MPI-OM</td>
+</tr>
+<tr>
+<td>Meteorological Research Institute</td>
+<td>Japan</td>
+<td>MRI-CGCM2.3.2</td>
+</tr>
+</table>
+
+  <p class="normal"> 
+  Daily data from the CMIP3 models is only available for the following time periods: 1961-2000, 2046-2065 and 2081-2100. Therefore our downscaling is unfortunately also constrained to lie within these time periods. 
+  </p>
+
+  <p class="normal"> 
+  The CMIP3 climate models are de-biased using the "CDF remapping" of <a href="http://onlinelibrary.wiley.com/doi/10.1029/2001JD000659/abstract" target="_blank">Wood et al 2002</a> with a very minor modification to enhance the robustness at the tails of the distribution. They are "de-biased" to look like the <a href="http://www.ecmwf.int/en/research/climate-reanalysis/era-interim" target="_blank">ERA-interim Reanalysis</a>, because our statistical models were "trained" using the large-scale from the ERA-interim Reanalysis.
+
+  </p>
+
+  <p class="normal"> 
+  </p>
+
+</div>
+</div>
+
+
+<address></address>
+</body> </html>

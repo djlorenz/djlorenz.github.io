@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+  MathJax.Hub.Config({
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+
+  <p class="indent"><a class="small" href="pitfalls.html">Potential Pitfalls</a></p>
+  <p class="indent"><a class="small" href="direct.html">Direct Predictors</a></p>
+  <p class="indent"><a class="small" href="other.html">Other Predictors</a></p>
+  <p class="indent"><a class="small" href="weight.html">Weighting Predictor Fields</a></p>
+
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Large-Scale Predictors</p>
+  <p class="medium">Potential Pitfalls</p>
+
+  <p class="normal"> 
+  In choosing large-scale predictors, you obviously want to use large scale predictors that are good at explaining the day to day weather. Unfortunately, some "obvious" predictors respond to climate change in ways unrelated to their role on the day-to-day variability. One example that is used frequently is 500mb geopotential height as a predictor of precipitation. Geopotential height is used because it is very closely related to the streamfunction of the large-scale circulation. Unfortunately in a warmer climate the global-mean 500mb geopotential height increases simply because the global-mean temperature increases between the surface and 500mb (Figure 1, left). This global-mean change has nothing to do with the reason 500mb geopotential height is used to predict day-to-day weather - 500mb geopotential height approximates the streamfunction, but only the gradients in streamfunction have any physical meaning, the value of the global-mean streamfunction is an arbitrary constant. In this particular case, one could remove the global-mean component of the 500mb geopotential height and use that as a predictor (Figure 1, right). In some cases, however, the potential problems with a predictor can be more subtle.
+  </p>
+
+<div id="figure">
+  <img src="zg.png" style="max-width:100%;">
+  <p class="caption">Figure 1: Left) change in time-mean 500mb geopotential height in a particular global climate model. Right) Same as the left but with the global-mean change subtracted from the geopotential change at each point.</p>
+</div>
+
+  <p class="normal"> 
+  A potential predictor for precipitation that has more subtle issues is atmospheric moisture. At the global scale, atmospheric moisture is expected to increase strongly at the <a href="http://journals.ametsoc.org/doi/abs/10.1175/JCLI3990.1" target="_blank">"Clausius-Clapeyron" rate</a> of about 7% per degree Celsius increase in temperature. Global-mean precipitation, on the other hand, is constrained by energetics to increase at a much smaller rate of about 2% per degree Celsius. While it is not clear that similar relationships hold at the regional scale, we have found that using a standard measure of atmospheric moisture as a predictor for precipitation does cause downscaled future precipitation to increase more than it otherwise would. This suggests that the global constraints mentioned above can be qualitatively relevant at the local scale as well. 
+  </p>
+  
+  <p class="normal"> 
+  The main conclusion from the above discussion is that one must be extremely careful when selecting large-scale predictors.
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>

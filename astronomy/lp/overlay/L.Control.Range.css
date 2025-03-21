@@ -1,0 +1,60 @@
+.leaflet-range-control {
+    background-color: #fff;
+}
+
+.leaflet-range-control.vertical {
+    width: 26px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    text-align: center;
+}
+
+.leaflet-range-control.horizontal {
+    height: 26px;
+    padding-right: 5px;
+}
+
+.leaflet-range-control .leaflet-range-icon {
+    display: inline-block;
+    float: left;
+    width: 26px;
+    height: 26px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwMDAwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHdpZHRoPSIyNCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4NCiAgICA8cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+DQogICAgPHBhdGggZD0iTTE1IDE3djJoMnYtMmgydi0yaC0ydi0yaC0ydjJoLTJ2Mmgyem01LTE1SDRjLTEuMSAwLTIgLjktMiAydjE2YzAgMS4xLjkgMiAyIDJoMTZjMS4xIDAgMi0uOSAyLTJWNGMwLTEuMS0uOS0yLTItMnpNNSA1aDZ2Mkg1VjV6bTE1IDE1SDRMMjAgNHYxNnoiLz4NCjwvc3ZnPg==');
+}
+
+.leaflet-range-control input[type=range] {
+    display: block;
+    cursor: pointer;
+    width: 100%;
+    margin: 0px;
+}
+
+.leaflet-range-control input[type=range][orient=horizontal] {
+    margin-top: 5px;
+    width: 150px;
+}
+
+.leaflet-range-control input[type=range][orient=vertical] {
+    height: 150px;
+    writing-mode: bt-lr;
+
+    /*
+     * -webkit-appearance is non-standard and may break in the future:
+     * https://developer.mozilla.org/en-US/docs/Web/CSS/-moz-appearance
+     * However, for now it's the only way to get a vertical range input on Chrome.
+     */
+    -webkit-appearance: slider-vertical;
+}
+
+/* Hack to target IE 10 & 11 */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .leaflet-range-control.vertical {
+        padding-bottom: 15px;
+    }
+
+    .leaflet-range-control input[type=range][orient=vertical] {
+        writing-mode: bt-lr;
+        width: 45px;
+        margin-left: -11px;
+    }
+}
