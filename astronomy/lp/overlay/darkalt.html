@@ -83,11 +83,21 @@ var lightpollution2024alt = L.tileLayer(
         zoomOffset: -2,
         opacity: 0.5
     })
-    
+
+var lightpollution2024alt2 = L.tileLayer(
+    '../../image_tiles/tiles2024alt2/tile_{z}_{x}_{y}.png', {
+        minZoom: 2,
+        maxNativeZoom: 8,
+        maxZoom: 19,
+        tileSize: 1024,
+        zoomOffset: -2,
+        opacity: 0.5
+    })
+
 var map = L.map('map', {
     center: [0, 0],
     zoom: 2,
-    layers: [standard, lightpollution2024alt],
+    layers: [standard, lightpollution2024alt2],
     tap: false
 });
 
@@ -99,8 +109,9 @@ var baseLayers = {
 };
 
 var overlays = {
-    '2024 light pollution': lightpollution2024,
-    'alternate color 2024': lightpollution2024alt
+    'original (2024)': lightpollution2024,
+    'alternate color #1': lightpollution2024alt
+    'alternate color #2': lightpollution2024alt2
 };
 
 var options = {
@@ -142,11 +153,16 @@ map.on('overlayadd', function(eo) {
     if (eo.layer !== lightpollution2024alt) {
         if ( map.hasLayer(lightpollution2024alt) ) {
             setTimeout(function(){map.removeLayer(lightpollution2024alt)}, 10); } }
+    if (eo.layer !== lightpollution2024alt2) {
+        if ( map.hasLayer(lightpollution2024alt2) ) {
+            setTimeout(function(){map.removeLayer(lightpollution2024alt2)}, 10); } }
     if (popup !== undefined) {
         if (popup.isOpen()) {
             if ( eo.layer == lightpollution2024 ) {
                 var year = 2024;
             } else if ( eo.layer == lightpollution2024alt ) {
+                var year = 2024;
+            } else if ( eo.layer == lightpollution2024alt2 ) {
                 var year = 2024;
             } else {
                 var year = 0
@@ -163,6 +179,8 @@ map.on('click', function(e) {
     if ( map.hasLayer(lightpollution2024) ) {
 	var year = 2024;
     } else if ( map.hasLayer(lightpollution2024alt) ) {
+	var year = 2024;
+    } else if ( map.hasLayer(lightpollution2024alt2) ) {
 	var year = 2024;
     } else {
 	var year = 0
@@ -284,6 +302,7 @@ var control = L.control.range({
 control.on('change input', function(e) {
     lightpollution2024.setOpacity(e.value / 100);
     lightpollution2024alt.setOpacity(e.value / 100);
+    lightpollution2024alt2.setOpacity(e.value / 100);
     trend.setOpacity(e.value / 100);
 })
 
