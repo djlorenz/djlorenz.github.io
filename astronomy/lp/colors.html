@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Color Scale</title>
+
+<meta name="description" content="Light Pollution Atlas">
+<meta name="keywords" content="Light Pollution Atlas, Light Pollution Maps">
+
+<style>
+body{
+background-color:rgb(27,27,27);
+}
+
+img { 
+height:auto;
+width:100%}
+
+body{
+margin:0;
+padding:10px;
+}
+
+#main {
+max-width:900px;
+margin:0 auto;
+border:5px solid;
+border-color:rgb(60,60,60);
+padding:10px;
+background-color:rgb(0,0,0);
+}
+
+p.bigbold{
+font-family:Arial, Helvetica, sans-serif;
+color:rgb(170,170,170);
+text-align: center;
+font-size:200%;
+font-weight:600;
+line-height:110%;
+margin-bottom:10px;
+margin-top:5px;
+}
+
+p.big{
+font-family:Arial, Helvetica, sans-serif;
+color:rgb(200,200,200);
+font-size:140%;
+font-weight:200;
+line-height:110%;
+margin-bottom:5px;
+margin-top:12px;
+margin-left:5px;
+margin-right:5px;
+}
+
+p.medium{
+font-family:Arial, Helvetica, sans-serif;
+color:rgb(170,170,170);
+font-size:125%;
+font-weight:200;
+line-height:125%;
+margin-bottom:10px;
+margin-top:10px;
+margin-left:10px;
+margin-right:10px;
+}
+
+p.normal{
+font-family:Arial, Helvetica, sans-serif;
+color:rgb(170,170,170);
+font-size:100%;
+font-weight:100;
+line-height:110%;
+margin-bottom:0px;
+margin-top:0px;
+margin-left:5px;
+margin-right:5px;
+}
+
+p.center{
+font-family:Arial, Helvetica, sans-serif;
+color:rgb(170,170,170);
+text-align: center;
+font-size:125%;
+font-weight:200;
+line-height:110%;
+margin-bottom:5px;
+margin-top:5px;
+margin-left:5px;
+margin-right:5px;
+}
+
+
+a{
+font-family:Arial, Helvetica, sans-serif;
+font-size:100%;
+font-weight:200;
+line-height:125%;
+color:rgb(100,100,255);
+}
+
+a:link {color:rgb(90,90,255);}      /* unvisited link */
+a:visited {color:rgb(180,90,235);}  /* visited link */
+a:hover {color:rgb(200,80,160);}  /* mouse over link */
+a:active {color:rgb(245,90,90);}  /* selected link */
+
+a.big{
+font-size:100%;
+font-weight:600;
+line-height:110%;
+margin-bottom:10px;
+margin-top:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div id="main">
+
+  <p class="bigbold">Color Scale</p>
+
+  <img src="colorbar.png" style="float:center" id="zone">
+  <br>
+
+  <p class="medium">All mentions of sky brightness below refer to brightness at zenith, which means straight up.
+  <br>
+  
+  <p class="big">Light Pollution Zone</p>
+
+  <p class="medium">The Light Pollution Zones correspond to the different colors on the atlas and are shown in the center of the color boxes above. Increasing the zone number by 1 corresponds to a factor of 3 increase in artificial light pollution. For example, going from 2a to 3a, or going from 4b to 5b both mean a factor of 3 increase. Zone numbers 1 to 7 are further divided into 2 sub-zones (a or b). The sub-zones equally divide interval and so they correspond to a factor of 1.73 increase (1.73 <span>&#8776;</span> square root of 3). The one exception to the factor of 3 change with zone number is zone 0, which is just an arbitrary small number chosen by Pierantonio Cinzano in the first light pollution atlas.</p>
+
+  <p class="medium">Note that changes in hue (blue vs green vs yellow, etc) correspond to changes in the number, and changes in lightness within a single hue correspond to the letter (a or b). One can also refer to the Light Pollution Zone by color (i.e. dark blue, light blue, etc) but the number and letter notation are better for color blindness.</p>
+
+  <hr color=gray>
+
+  <p class="big" id="index">Light Pollution Index</p>
+
+  <p class="medium">The Light Pollution Index (LPI) is the most intuitive metric because it relates brightness to an unpolluted night sky. The Light Pollution Index is defined as the ratio between artificial sky brightness and natural sky brightness. An LPI of 0 corresponds to a pristine sky. An LPI of 1 means that artificial brightness is equal to natural brightness (= boundary between Zone 3b (light green) and 4a (dark yellow)). When LPI < 1, natural sources (stars, zodiacal light) are more important than artificial sources. When LPI > 1, artificial sources are more important. In a city, the LPI is typically 30 or more, meaning artificial light is 30 times greater than natural! For this metric we take the natural sky brightness as 22.0 magnitudes per square arc-second. In reality the natural brightness can change from night to night due to variations in <a href="https://earthobservatory.nasa.gov/images/147122/aurora-meet-airglow" target="_blank">airglow</a>.</p>
+
+  <hr color=gray>
+
+  <p class="big" id="mag">Magnitudes per Square Arc-second</p>
+  
+  <p class="medium">Astronomers measure brightness with the <a href="https://en.wikipedia.org/wiki/Magnitude_(astronomy)" target="_blank">magnitude</a> scale which runs opposite to other scales: darker values are greater than brighter values. It is derived from a system by ancient Greek astronomer Hipparchus where the brightest stars in the sky were denoted magnitude 1 and the faintest naked-sky stars are magnitude 6. Modern astronomers later refined the system and defined a difference in 5 magnitudes as a factor of 100 in brightness. As currently defined, the brightest stars in the sky have negative magnitude and the faintest stars observable by the naked eye are greater than 6.</p>
+
+  <p class="medium">For a non-point source of light, like the background sky brightness, the brightness per area of sky rather than just brightness alone is the proper way to define brightness unambiguously. Astronomers measure angular distance of the sky using <a href="https://en.wikipedia.org/wiki/Minute_and_second_of_arc" target="_blank">arc-seconds and arc-minutes</a> and area of the sky using square seconds and square arc-minutes. Here we take the background sky as 22.0 magnitudes per square arc-second. In more intuitive terms, this brightness is equivalent to one 6th magnitude star per area of the full moon. As the sky becomes more light polluted the magnitudes per square arc-second goes down in number (see color key at top of this page). The natural sky brightness is a combination of <a href="https://en.wikipedia.org/wiki/Airglow" target="_blank">airglow</a> (recombination of atoms in the upper atmosphere, which were photo-ionized by the Sun during the day), <a href="https://en.wikipedia.org/wiki/Zodiacal_light" target="_blank">Zodiacal Light</a> (sunlight scattered by dust in solar system. Most prominent near sun on ecliptic, but in fact spans the entire sky) and scattered starlight. Airglow is quite variable so the true natural background sky brightness varies from night to night and location to location. Airglow <a href="https://spaceweatherarchive.com/2023/06/28/solar-max-is-boosting-airglow/" target="_blank">increases during solar maximum</a> so dark locations will have brighter skies during solar maximum (which is ongoing as of 2025). Bright locations in cities are swamped by artificial light so this variability is visually undetectable.</p>
+
+  <hr color=gray>
+
+  <p class="big">Bortle Scale</p>
+
+  <p class="medium">The Bortle Scale is a distinct, subjective evaluation of the night sky using your eyes alone. The relationship between the Bortle scale and brightness at zenith is discussed <a href="bortle.html" target="_blank">here</a>. I do not recommend conflating the two.</p>
+  
+<!--  <a href="" target="_blank"></a> -->
+  
+  <br>
+<hr color=gray>
+  <p class="normal">For more information contact:</p>
+  <p class="normal">David Lorenz</p>
+  <p class="normal">dlorenz@wisc.edu</p>
+  
+</div>
+
+
+<address></address>
+</body> </html>

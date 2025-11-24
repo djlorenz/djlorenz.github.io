@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Daily Downscaled Data</title>
+
+<meta name="description" content="David J. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+<meta name="keywords" content="David J. Lorenz, David Lorenz, D. J. Lorenz, D. Lorenz, Daily Downscaled Data, Statistical Downscaling">
+
+<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+<meta content="utf-8" http-equiv="encoding">
+
+<style>
+body{
+background-image:url(../../images/lower420.png);
+}
+</style>
+
+<link rel="stylesheet" type="text/css" href="../style.css">
+
+</head>
+
+
+<body>
+
+<div id="container">
+  
+<div id="sidebar">
+  
+  <p class="normal"><a href="../main.html">Introduction</a></p>
+  <p class="normal"><a href="../ProbApp/prob.html">Advantages of a Probabilistic Approach</a></p>
+  <p class="normal"><a href="../StatMod/stat.html">Statistical Models</a></p>
+  <p class="normal"><a href="../LSPred/pred.html">Large-Scale Predictors</a></p>
+  <p class="normal"><a href="../Fit/fit.html">Fitting Statistical Models - Cross Validation</a></p>
+  <p class="normal"><a href="../Data/data.html">Data and Data Quality Control</a></p>
+  <p class="normal"><a href="../Interp/interp.html">Interpolating to a Grid</a></p>
+  <p class="normal"><a href="../Cov/cov.html">Covariability between Grid Points and Variables</a></p>
+  <p class="normal"><a href="../CMIP3/models.html">Climate Models and De-biasing</a></p>
+  <p class="normal"><a href="../Perf/perf.html">Performance</a></p>
+  <p class="normal"><a href="../Proj/proj.html">Future Projections</a></p>
+
+</div>
+
+<div id="content">
+  
+  <a href="../../" style="float:right">Home</a>
+  <p class="bigbold">Downscaled Climate Projections</p>
+  <p class="big">Covariability between Grid Points and Variables</p>
+
+  <p class="normal"> 
+  The end result of the previous steps are spatially and temporally varying PDF parameters on a grid. To create "real data" random numbers are drawn from the PDFs. Because real precipitation and temperature fields have spatial and temporal auto-correlation, the random numbers must be correlated in space and time to reproduce the proper spatial and temporal scales of observations. In addition, the large-scale wind field is used to advect the random noise for precipitation so that anisotropy in the precipitation spatial decorrelation is better captured. Also, the noise for minimum and maximum temperature need to be correlated to capture the covariability between these two variables. An iterative process is use to fit the random noise parameters.
+  </p>
+
+  <hr>
+  <a href="../../">Home</a>
+  
+</div>
+</div>
+  
+<address></address>
+</body> </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planet Trek Dane County</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+</head>
+<body>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <script>
+
+      mapLink = '<a href="http://openstreetmap.org" target="_blank">OpenStreetMap</a>';
+
+      var standard = L.tileLayer(
+          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; ' + mapLink + ' Contributors ',
+          maxZoom: 19
+          })
+
+      var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community  ',
+          maxZoom: 19
+          });
+
+      var Esri_WorldTopoMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+          attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community  ',
+          maxZoom: 19
+          });
+
+      var topo = L.tileLayer(
+          'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+          attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>) ',
+          maxZoom: 19
+          })
+
+      var map = L.map('map', {
+  		center: [43.04, -89.48],
+		zoom: 11,
+                layers: [standard]
+  	});
+
+       var baseLayers = {
+	       "OpenStreetMap": standard,
+	       "Esri WorldImagery": Esri_WorldImagery,
+	       "Esri WorldTopoMap": Esri_WorldTopoMap,
+	       "OpenTopoMap": topo
+	};
+
+    
+    L.control.layers(baseLayers).addTo(map);
+    
+var Sun=L.circleMarker([43.0695993,-89.3827751],{radius:15,color:"#e38510",fillColor:"#e38510",fillOpacity: 0.5}).addTo(map);
+Sun.bindPopup("<b>Sun</b><br><a href=https://www.google.com/maps/place/43.0695993,-89.3827751 target=_blank>Google Maps</a>");
+
+var Mercury=L.circleMarker([43.0674508,-89.3850791],{radius:9,color:"#5e5e5e",fillColor:"#5e5e5e",fillOpacity: 0.5}).addTo(map);
+Mercury.bindPopup("<b>Mercury</b><br><a href=https://www.google.com/maps/place/43.0674508,-89.3850791 target=_blank>Google Maps</a>");
+
+var Venus=L.circleMarker([43.0665175,-89.3875970],{radius:9,color:"#b38639",fillColor:"#b38639",fillOpacity: 0.5}).addTo(map);
+Venus.bindPopup("<b>Venus</b><br><a href=https://www.google.com/maps/place/43.0665175,-89.3875970 target=_blank>Google Maps</a>");
+
+var Earth=L.circleMarker([43.0650087,-89.3890213],{radius:9,color:"#0f0be3",fillColor:"#0f0be3",fillOpacity: 0.5}).addTo(map);
+Earth.bindPopup("<b>Earth</b><br><a href=https://www.google.com/maps/place/43.0650087,-89.3890213 target=_blank>Google Maps</a>");
+
+var Mars=L.circleMarker([43.0665290,-89.3919462],{radius:9,color:"#e32b0b",fillColor:"#e32b0b",fillOpacity: 0.5}).addTo(map);
+Mars.bindPopup("<b>Mars</b><br><a href=https://www.google.com/maps/place/43.0665290,-89.3919462 target=_blank>Google Maps</a>");
+
+var Ceres=L.circleMarker([43.0697311,-89.4049389],{radius:7,color:"#5e5e5e",fillColor:"#5e5e5e",fillOpacity: 0.5}).addTo(map);
+Ceres.bindPopup("<b>Ceres</b><br><a href=https://www.google.com/maps/place/43.0697311,-89.4049389 target=_blank>Google Maps</a>");
+
+var Jupiter=L.circleMarker([43.0644870,-89.4241297],{radius:12,color:"#c27817",fillColor:"#c27817",fillOpacity: 0.5}).addTo(map);
+Jupiter.bindPopup("<b>Jupiter</b><br><a href=https://www.google.com/maps/place/43.0644870,-89.4241297 target=_blank>Google Maps</a>");
+
+var Saturn=L.circleMarker([43.0450727,-89.4541446],{radius:12,color:"#c2a017",fillColor:"#c2a017",fillOpacity: 0.5}).addTo(map);
+Saturn.bindPopup("<b>Saturn</b><br><a href=https://www.google.com/maps/place/43.0450727,-89.4541446 target=_blank>Google Maps</a>");
+
+var Uranus=L.circleMarker([43.0042624,-89.4852667],{radius:10,color:"#2e7037",fillColor:"#2e7037",fillOpacity: 0.5}).addTo(map);
+Uranus.bindPopup("<b>Uranus</b><br><a href=https://www.google.com/maps/place/43.0042624,-89.4852667 target=_blank>Google Maps</a>");
+
+var Neptune=L.circleMarker([42.9914041,-89.5739948],{radius:10,color:"#2a4ed1",fillColor:"#2a4ed1",fillOpacity: 0.5}).addTo(map);
+Neptune.bindPopup("<b>Neptune</b><br><a href=https://www.google.com/maps/place/42.9914041,-89.5739948 target=_blank>Google Maps</a>");
+
+    </script>
+</body>
+</html>
