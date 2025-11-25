@@ -226,28 +226,25 @@ map.on('overlayadd', function(eo) {
 
 map.on('click', function(e) {
     
-    if ( window.location.href == 'https://djlorenz.github.io/astronomy/lp/overlay/dark.html' ) {
+    // get year of current displayed overlay
+    if ( map.hasLayer(lightpollution2024) ) {
+	var year = 2024;
+    } else if ( map.hasLayer(lightpollution2023) ) {
+	var year = 2023;
+    } else if ( map.hasLayer(lightpollution2022) ) {
+	var year = 2022;
+    } else if ( map.hasLayer(lightpollution2020) ) {
+	var year = 2020;
+    } else if ( map.hasLayer(lightpollution2016) ) {
+	var year = 2016;
+    } else {
+	var year = 0
+    }
+    
+    getInfoFromLonLat(e.latlng,year);
+    // save lat and lon of popup to update popup in case overlay changes: 
+    popuplatlng = e.latlng
 	
-	// get year of current displayed overlay
-	if ( map.hasLayer(lightpollution2024) ) {
-	    var year = 2024;
-	} else if ( map.hasLayer(lightpollution2023) ) {
-	    var year = 2023;
-	} else if ( map.hasLayer(lightpollution2022) ) {
-	    var year = 2022;
-	} else if ( map.hasLayer(lightpollution2020) ) {
-	    var year = 2020;
-	} else if ( map.hasLayer(lightpollution2016) ) {
-	    var year = 2016;
-	} else {
-	    var year = 0
-	}
-	
-	getInfoFromLonLat(e.latlng,year);
-	// save lat and lon of popup to update popup in case overlay changes: 
-	popuplatlng = e.latlng
-	
-    }									     
 });
 
 function getInfoFromLonLat(elatlng,year) {
